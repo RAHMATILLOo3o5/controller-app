@@ -29,15 +29,12 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['login', 'signup'],
                         'allow' => true,
-                        'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -51,6 +48,8 @@ class SiteController extends Controller
             ],
         ];
     }
+
+    public $defaultAction = 'login';
 
     /**
      * {@inheritdoc}
@@ -96,6 +95,7 @@ class SiteController extends Controller
 
         $model->password = '';
 
+        $this->layout = 'main-login';
         return $this->render('login', [
             'model' => $model,
         ]);

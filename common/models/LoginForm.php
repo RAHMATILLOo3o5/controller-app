@@ -49,6 +49,15 @@ class LoginForm extends Model
         }
     }
 
+    public function attributeLabels()
+    {
+        return [
+          'username' => 'Foydalanuvchi nomi',
+          'password' => 'Parol',
+          'remeberMe' => 'Meni eslab qol'
+        ];
+    }
+
     /**
      * Logs in a user using the provided username and password.
      *
