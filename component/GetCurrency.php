@@ -2,8 +2,7 @@
 
 namespace component;
 
-use InvalidArgumentException;
-use Yii;
+
 use yii\base\Widget;
 use yii\web\ServerErrorHttpException;
 

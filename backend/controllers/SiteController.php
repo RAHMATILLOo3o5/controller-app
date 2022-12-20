@@ -4,58 +4,15 @@ namespace backend\controllers;
 
 use common\models\LoginForm;
 use Yii;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\Response;
 use component\GetCurrency;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => \yii\web\ErrorAction::class,
-            ],
-        ];
-    }
-    public $defaultAction = 'index';
     /**
      * Displays homepage.
      *
@@ -63,7 +20,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if(!isset($_SESSION['currency'])){
+        if (!isset($_SESSION['currency'])) {
             GetCurrency::getCurrentCurrencyValue();
         }
         return $this->render('index');

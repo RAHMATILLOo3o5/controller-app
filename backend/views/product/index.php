@@ -1,14 +1,12 @@
 <?php
 
 use common\models\Product;
-use component\GetCurrency;
 use kartik\export\ExportMenu;
 use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
-use yii\helpers\VarDumper;
 use yii\widgets\Pjax;
 
 
