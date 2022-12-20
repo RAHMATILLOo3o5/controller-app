@@ -48,6 +48,7 @@ class AppAsset extends AssetBundle
         'js/quill.min.js',
         'js/apps.js',
         'https://www.googletagmanager.com/gtag/js?id=UA-56159088-1',
+        'js/script.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

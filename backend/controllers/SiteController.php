@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
+use component\GetCurrency;
 
 /**
  * Site controller
@@ -54,7 +55,7 @@ class SiteController extends Controller
             ],
         ];
     }
-
+    public $defaultAction = 'index';
     /**
      * Displays homepage.
      *
@@ -62,6 +63,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if(!isset($_SESSION['currency'])){
+            GetCurrency::getCurrentCurrencyValue();
+        }
         return $this->render('index');
     }
 

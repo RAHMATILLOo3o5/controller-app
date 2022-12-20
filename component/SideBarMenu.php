@@ -3,7 +3,6 @@
 namespace component;
 
 use yii\bootstrap5\Widget;
-use yii\helpers\Url;
 
 class SideBarMenu extends Widget
 {
