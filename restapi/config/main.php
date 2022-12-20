@@ -42,7 +42,7 @@ return [
             'rules' => [
                 [
                     'class' => \yii\rest\UrlRule::class,
-                    'controller' => [ 'user' ]
+                    'controller' => [ 'user', 'product' ]
                 ]
             ],
         ],
