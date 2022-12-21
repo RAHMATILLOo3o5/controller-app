@@ -10,5 +10,5 @@ $(function () {
     let all_data = every_amount.val() * $(this).val();
     all.val(all_data);
   });
-
+  
 });

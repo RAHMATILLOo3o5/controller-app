@@ -15,6 +15,10 @@ use yii\behaviors\TimestampBehavior;
  */
 class ProductCategory extends \yii\db\ActiveRecord
 {
+
+    const UNIT_KG = 0;
+    const UNIT_EACH = 1;
+
     /**
      * {@inheritdoc}
      */
@@ -40,7 +44,7 @@ class ProductCategory extends \yii\db\ActiveRecord
     {
         return [
             [['category_name'], 'required'],
-            [['unit', 'created_at'], 'default', 'value' => null],
+            [['unit', 'created_at'], 'default', 'value' => 0],
             [['unit', 'created_at'], 'integer'],
             [['category_name'], 'string', 'max' => 255],
         ];
@@ -57,5 +61,24 @@ class ProductCategory extends \yii\db\ActiveRecord
             'unit' => 'Birligi kg/dona',
             'created_at' => 'Qo\'shilgan vaqti',
         ];
+    }
+
+    public function getUnitVal(): array
+    {
+        $unit = [
+            static::UNIT_KG => 'KG',
+            static::UNIT_EACH => 'DONA',
+        ];
+
+        return $unit;
+    }
+
+    public function getUnitLabel(): string
+    {
+        if($this->unit == static::UNIT_KG){
+            return "<span class='badge badge-info'>KG</span>";
+        } else{
+            return "<span class='badge badge-primary'>DONA</span>";
+        }
     }
 }

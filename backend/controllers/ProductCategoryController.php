@@ -4,7 +4,11 @@ namespace backend\controllers;
 
 use common\models\ProductCategory;
 use common\models\search\ProductCategoryQuery;
+use kartik\form\ActiveForm;
+use Yii;
+use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * ProductCategoryController implements the CRUD actions for ProductCategory model.
@@ -21,7 +25,11 @@ class ProductCategoryController extends BaseController
     {
         $searchModel = new ProductCategoryQuery();
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $model = new ProductCategory();
+        if (Yii::$app->request->get('id')) {
+            $model = $this->findModel(Yii::$app->request->get('id'));
+        } else {
+            $model = new ProductCategory();
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -50,20 +58,19 @@ class ProductCategoryController extends BaseController
     public function actionCreate()
     {
         $model = new ProductCategory();
-
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->session->setFlash('success', 'Saqlandi', true);
+                return $this->redirect(Yii::$app->request->referrer);
+            } else {
+                Yii::$app->session->setFlash('danger', 'Saqlanmadi', true);
+                return $this->redirect(Yii::$app->request->referrer);
             }
         } else {
-            $model->loadDefaultValues();
+            Yii::$app->session->setFlash('danger', 'Xatolik', true);
+            return $this->redirect(Yii::$app->request->referrer);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
-
     /**
      * Updates an existing ProductCategory model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -75,13 +82,18 @@ class ProductCategoryController extends BaseController
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'Saqlandi', true);
+                return $this->redirect(['index']);
+            } else {
+                Yii::$app->session->setFlash('danger', 'Saqlanmadi', true);
+                return $this->redirect(['index']);
+            }
+        } else {
+            Yii::$app->session->setFlash('danger', 'Xatolik', true);
+            return $this->redirect(['index']);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
