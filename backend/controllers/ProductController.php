@@ -2,10 +2,12 @@
 
 namespace backend\controllers;
 
+use backend\models\OneOfProduct;
 use common\models\search\ProductQuery;
 use Yii;
 use yii\web\NotFoundHttpException;
 use backend\models\ProductBackendModel;
+use yii\helpers\VarDumper;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -49,7 +51,7 @@ class ProductController extends BaseController
     public function actionCreate()
     {
         $model = new ProductBackendModel();
-
+        $model2 = new OneOfProduct();
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->status = $model::STATUS_ACTIVE;
@@ -60,10 +62,20 @@ class ProductController extends BaseController
             $model->loadDefaultValues();
         }
 
+        return $this->render('create', compact('model', 'model2'));
+    }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+
+    public function actionOneCreate()
+    {
+        $model = new OneOfProduct();
+        if(Yii::$app->request->isPost && $model->load($this->request->post())){
+
+            $model->save();
+            return $this->redirect(['index']);
+        } else{
+            return $this->redirect(['create']);
+        }
     }
 
     /**

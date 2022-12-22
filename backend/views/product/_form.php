@@ -1,10 +1,11 @@
 <?php
 
-use component\GetCurrency;
+use kartik\form\ActiveForm as FormActiveForm;
 use kartik\widgets\Select2;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var common\models\Product $model */
@@ -12,10 +13,10 @@ use yii\helpers\ArrayHelper;
 ?>
 <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Optom kiritish</a>
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Optom</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Donalab kiritish</a>
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Donalab</a>
     </li>
 </ul>
 <div class="tab-content" id="myTabContent">
@@ -63,8 +64,33 @@ use yii\helpers\ArrayHelper;
         </div>
     </div>
     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        Anim pariatur cliche reprehenderit, enim eiusmod high
-        life accusamus terry richardson ad squid. 3 wolf moon
-        officia aute, non cupidatat skateboard dolor brunch.
+        <div class="card p-1">
+            <?php $f = FormActiveForm::begin([
+                'action' => Url::toRoute(['product/one-create'])
+            ]) ?>
+
+            <?= $f->field($model2, 'category_id')->widget(Select2::class, [
+                'data' => ArrayHelper::map($model2->categoryList, 'id', 'category_name'),
+                'options' => [
+                    'placeholder' => 'Katalogni tanlang:'
+                ]
+            ]) ?>
+
+            <?= $f->field($model2, 'product_name')->textInput() ?>
+            <?= $f->field($model2, 'all_amount')->textInput() ?>
+            <?= $f->field($model2, 'one_price')->textInput() ?>
+            <?= $f->field($model2, 'product_purchase_price')->textInput(['readonly' => 'readonly']) ?>
+            <?= $f->field($model2, 'min_sell_price_retail')->textInput() ?>
+
+            <?= $f->field($model2, 'max_sell_price_retail')->textInput() ?>
+
+            <?= $f->field($model2, 'min_sell_price_good')->textInput() ?>
+
+            <?= $f->field($model2, 'max_sell_price_good')->textInput() ?>
+            <div class="form-group">
+                <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
+            </div>
+            <?php FormActiveForm::end() ?>
+        </div>
     </div>
 </div>

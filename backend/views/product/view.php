@@ -52,7 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'all_amount',
-                                'value' => $model->allAmountFormat
+                                'value' => $model->allAmountFormat,
+                                'format' => 'html'
                             ],
                             [
                                 'attribute' => 'product_purchase_price',

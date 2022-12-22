@@ -176,11 +176,11 @@ class Product extends \yii\db\ActiveRecord
         if ($this->type_of_currency == static::USD) {
             return $price . ' $';
         } elseif ($this->type_of_currency == static::RUB) {
-            return $price . ' R';
+            return $price . ' ₽';
         } elseif ($this->type_of_currency == static::EURO) {
-            return $price . ' E';
+            return $price . ' €';
         }
-        return $price . ' S';
+        return $price . ' so\'m';
     }
     public function getAmountFormat()
     {
