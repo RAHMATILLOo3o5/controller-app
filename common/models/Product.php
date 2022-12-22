@@ -10,6 +10,7 @@ use component\GetCurrency;
  * This is the model class for table "product".
  *
  * @property int $id
+ * @property int $category_id
  * @property string $product_name
  * @property int $amount
  * @property int $every_amount
@@ -85,7 +86,8 @@ class Product extends \yii\db\ActiveRecord
                 'type_of_currency',
                 'status',
                 'created_at',
-                'updated_at'
+                'updated_at',
+                'category_id'
             ], 'integer'],
             [[
                 'currency_price',
@@ -107,14 +109,15 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'category_id' => 'Katalog',
             'product_name' => 'Mahsulot nomi',
             'amount' => 'Hajmi qop/quti',
             'every_amount' => 'Dona miqdori kg/dona',
             'all_amount' => 'Umumiy miqdori kg/dona',
-            'product_purchase_price' => 'Umumiy sotib olish narxi',
+            'product_purchase_price' => 'Kelish narxi',
             'type_of_currency' => 'Olish valyutasi',
             'currency_price' => 'Valyuta narxi so\'mda',
-            'converd_currency' => 'Umumiy narx so\'mda',
+            'converd_currency' => 'Kelish narxi so\'mda',
             'min_sell_price_retail' => 'Chakana minimal narxi',
             'max_sell_price_retail' => 'Chakana maksimal narxi',
             'min_sell_price_good' => 'Optom minimal narxi',
@@ -169,7 +172,15 @@ class Product extends \yii\db\ActiveRecord
     }
     public function getProductPurchasePrice()
     {
-        return number_format($this->product_purchase_price, 2, '.', ' ');
+        $price = number_format($this->product_purchase_price, 2, '.', ' ');
+        if ($this->type_of_currency == static::USD) {
+            return $price . ' $';
+        } elseif ($this->type_of_currency == static::RUB) {
+            return $price . ' R';
+        } elseif ($this->type_of_currency == static::EURO) {
+            return $price . ' E';
+        }
+        return $price . ' S';
     }
     public function getAmountFormat()
     {
@@ -177,11 +188,11 @@ class Product extends \yii\db\ActiveRecord
     }
     public function getEveryAmountFormat()
     {
-        return number_format($this->every_amount, 2, '.', ' ');
+        return number_format($this->every_amount, 0, '.', ' ');
     }
     public function getAllAmountFormat()
     {
-        return number_format($this->all_amount, 0, '.', ' ');
+        return number_format($this->all_amount, 0, '.', ' ') . $this->category->unitLabel;
     }
     public function getMinSellPriceRetail()
     {
@@ -235,5 +246,10 @@ class Product extends \yii\db\ActiveRecord
         $response = self::find()->sum('converd_currency');
 
         return $response;
+    }
+
+    public function getCategory()
+    {
+        return $this->hasOne(ProductCategory::class, ['id' => 'category_id']);
     }
 }

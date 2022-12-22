@@ -124,26 +124,21 @@ $gridColumns = [
 
                             'product_name',
                             [
-                                'attribute' => 'amount',
-                                'value' => 'amountFormat'
-                            ],
-                            [
-                                'attribute' => 'every_amount',
-                                'value' => 'everyAmountFormat'
+                                'attribute' => 'category_id',
+                                'value' => function ($model) {
+                                    return $model->category->category_name;
+                                }
                             ],
                             [
                                 'attribute' => 'all_amount',
-                                'value' => 'allAmountFormat'
+                                'value' => 'allAmountFormat',
+                                'format' => 'html'
                             ],
                             [
                                 'attribute' => 'product_purchase_price',
                                 'value' => 'productPurchasePrice'
                             ],
-                            [
-                                'attribute' => 'type_of_currency',
-                                'value' => 'currencyFormat',
-                                'format' => 'html'
-                            ],
+                            
                             [
                                 'attribute' => 'currency_price',
                                 'value' => 'currencyValue',

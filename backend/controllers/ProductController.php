@@ -2,10 +2,10 @@
 
 namespace backend\controllers;
 
-use common\models\Product;
 use common\models\search\ProductQuery;
 use Yii;
 use yii\web\NotFoundHttpException;
+use backend\models\ProductBackendModel;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -48,12 +48,11 @@ class ProductController extends BaseController
      */
     public function actionCreate()
     {
-        $model = new Product();
+        $model = new ProductBackendModel();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->status = $model::STATUS_ACTIVE;
-                $model->currency_price = $model->setCurrency($model->type_of_currency);
                 $model->converd_currency = $model->setConverdCurrency($model->product_purchase_price, $model->currency_price);
                 return $model->save() && $this->redirect(['view', 'id' => $model->id]);
             }
@@ -112,7 +111,7 @@ class ProductController extends BaseController
      */
     protected function findModel($id)
     {
-        if (($model = Product::findOne(['id' => $id])) !== null) {
+        if (($model = ProductBackendModel::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

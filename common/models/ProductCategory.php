@@ -76,9 +76,9 @@ class ProductCategory extends \yii\db\ActiveRecord
     public function getUnitLabel(): string
     {
         if($this->unit == static::UNIT_KG){
-            return "<span class='badge badge-info'>KG</span>";
+            return "<span class='badge badge-info ml-1'> KG</span>";
         } else{
-            return "<span class='badge badge-primary'>DONA</span>";
+            return "<span class='badge badge-primary ml-1'> DONA</span>";
         }
     }
 }
