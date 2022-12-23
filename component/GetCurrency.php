@@ -2,7 +2,7 @@
 
 namespace component;
 
-
+use Yii;
 use yii\base\Widget;
 use yii\web\ServerErrorHttpException;
 
@@ -44,12 +44,13 @@ class GetCurrency extends Widget
             if (isset($_SESSION['currency'])) {
                 return true;
             } else {
-                $_SESSION['currency'] = [
+                $c = [
                     'rubl' => $rubl[0]->Rate,
                     'usd' => $usd[0]->Rate,
                     'eur' => $eur[0]->Rate,
                     'time' => time()
                 ];
+                Yii::$app->session->set('currency', $c);
             }
         } else {
             throw new ServerErrorHttpException("{$domain} bilan aloqa yo'q!", 500);
