@@ -38,7 +38,8 @@ AppAsset::register($this);
             'menuItem' => [
                 ['label' => 'Bosh menu', 'url' => Url::home(), 'icon' => 'home'],
                 ['label' => 'Kataloglar', 'url' => Url::to(['product-category/index']), 'icon' => 'server'],
-                ['label' => 'Mahsulotlar', 'url' => Url::to(['product/index']), 'icon' => 'shopping-cart']
+                ['label' => 'Mahsulotlar', 'url' => Url::to(['product/index']), 'icon' => 'shopping-cart'],
+                ['label' => 'Ishchilar', 'url' => Url::to(['worker/index']), 'icon' => 'users']
             ]
         ]); ?>
         <main role="main" class="main-content">

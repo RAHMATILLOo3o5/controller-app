@@ -2,36 +2,35 @@
 
 namespace backend\controllers;
 
-use backend\models\OneOfProduct;
-use common\models\search\ProductQuery;
-use Yii;
+use common\models\Worker;
+use common\models\search\WorkerQuery;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use backend\models\ProductBackendModel;
-use yii\helpers\VarDumper;
+use yii\filters\VerbFilter;
 
 /**
- * ProductController implements the CRUD actions for Product model.
+ * WorkerController implements the CRUD actions for Worker model.
  */
-class ProductController extends BaseController
+class WorkerController extends BaseController
 {
     /**
-     * Lists all Product models.
+     * Lists all Worker models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ProductQuery();
+        $searchModel = new WorkerQuery();
         $dataProvider = $searchModel->search($this->request->queryParams);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'allMoney' => $searchModel->allMoney
         ]);
     }
 
     /**
-     * Displays a single Product model.
+     * Displays a single Worker model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -44,42 +43,32 @@ class ProductController extends BaseController
     }
 
     /**
-     * Creates a new Product model.
+     * Creates a new Worker model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new ProductBackendModel();
-        $model2 = new OneOfProduct();
+        $model = new Worker();
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->status = $model::STATUS_ACTIVE;
-                $model->converd_currency = $model->setConverdCurrency($model->product_purchase_price, $model->currency_price);
-                return $model->save() && $this->redirect(['view', 'id' => $model->id]);
+                $model->setPassword($model->full_name);
+                $model->generateAuthKey();
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', compact('model', 'model2'));
-    }
-
-
-    public function actionOneCreate()
-    {
-        $model = new OneOfProduct();
-        if(Yii::$app->request->isPost && $model->load($this->request->post())){
-
-            $model->save();
-            return $this->redirect(['index']);
-        } else{
-            return $this->redirect(['create']);
-        }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Updates an existing Product model.
+     * Updates an existing Worker model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -88,9 +77,11 @@ class ProductController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
         if ($this->request->isPost && $model->load($this->request->post())) {
-            $model->converd_currency = $model->setConverdCurrency($model->product_purchase_price, $model->currency_price);
-            return $model->save() && $this->redirect(['view', 'id' => $model->id]);
+            $model->setPassword($model->full_name);
+            $model->save();
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -99,7 +90,7 @@ class ProductController extends BaseController
     }
 
     /**
-     * Deletes an existing Product model.
+     * Deletes an existing Worker model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -113,15 +104,15 @@ class ProductController extends BaseController
     }
 
     /**
-     * Finds the Product model based on its primary key value.
+     * Finds the Worker model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Product the loaded model
+     * @return Worker the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = ProductBackendModel::findOne(['id' => $id])) !== null) {
+        if (($model = Worker::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

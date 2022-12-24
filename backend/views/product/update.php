@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = 'Tahrirlash';
     <div class="col-md-8 offset-md-2">
         <h1><?= Html::encode($this->title) ?></h1>
 
-        <?= $this->render('_form', [
+        <?= $this->render('_update-form', [
             'model' => $model,
         ]) ?>
     </div>
