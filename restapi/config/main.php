@@ -20,6 +20,8 @@ return [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
+            'enableSession' => false,
+            'loginUrl' => null,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
 
@@ -42,7 +44,7 @@ return [
             'rules' => [
                 [
                     'class' => \yii\rest\UrlRule::class,
-                    'controller' => [ 'user', 'product' ]
+                    'controller' => ['user', 'product', 'category', 'worker']
                 ]
             ],
         ],

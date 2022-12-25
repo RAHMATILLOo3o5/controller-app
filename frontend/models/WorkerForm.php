@@ -1,14 +1,12 @@
 <?php
 
-namespace common\models;
+namespace frontend\models;
 
-use Yii;
+use common\models\Worker;
 use yii\base\Model;
+use Yii;
 
-/**
- * Login form
- */
-class LoginForm extends Model
+class WorkerForm extends Model
 {
     public $username;
     public $password;
@@ -52,9 +50,9 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-          'username' => 'Foydalanuvchi nomi',
-          'password' => 'Parol',
-          'remeberMe' => 'Meni eslab qol'
+            'username' => 'Telefon raqam',
+            'password' => 'Parol',
+            'remeberMe' => 'Meni eslab qol'
         ];
     }
 
@@ -68,19 +66,19 @@ class LoginForm extends Model
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
-        
+
         return false;
     }
 
     /**
      * Finds user by [[username]]
      *
-     * @return User|null
+     * @return Worker|null
      */
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = Worker::findByUsername($this->username);
         }
 
         return $this->_user;

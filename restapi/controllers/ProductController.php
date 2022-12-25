@@ -3,9 +3,8 @@
 namespace restapi\controllers;
 
 use restapi\models\ProductModel;
-use yii\rest\ActiveController;
 
-class ProductController extends ActiveController{
+class ProductController extends BaseController{
 
     public $modelClass = ProductModel::class;
 
