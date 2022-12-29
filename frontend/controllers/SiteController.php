@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use backend\controllers\BaseController;
+use common\models\Backlog;
 use common\models\Selling;
 use Yii;
 use frontend\models\SignupForm;
@@ -24,7 +25,8 @@ class SiteController extends BaseController
     public function actionIndex()
     {
         $model = new Selling();
-        return $this->render('index', compact('model'));
+        $backlog = new Backlog();
+        return $this->render('index', compact('model', 'backlog'));
     }
 
     /**

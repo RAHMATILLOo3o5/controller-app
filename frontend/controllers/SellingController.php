@@ -5,8 +5,9 @@ namespace frontend\controllers;
 use common\models\Product;
 use common\models\Selling;
 use Yii;
-use yii\helpers\VarDumper;
 use yii\web\Response;
+use common\models\Backlog;
+use yii\helpers\VarDumper;
 
 class SellingController extends \yii\web\Controller
 {
@@ -14,12 +15,23 @@ class SellingController extends \yii\web\Controller
     {
         $model = new Selling();
 
+        $backlog = new Backlog();
+        if ($backlog->load(Yii::$app->request->post()) && $model->load(Yii::$app->request->post())) {
+            $model->save();
+            $backlog->selling_id = $model->id;
+            $backlog->save();
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 $model->save();
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }
+
+
+
         if ($this->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $product_id = Yii::$app->request->post('product_id');

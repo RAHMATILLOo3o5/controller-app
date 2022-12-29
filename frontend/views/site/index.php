@@ -25,7 +25,7 @@ $this->title = 'Bosh menu';
                     <?= $this->render('_selling-form', compact('model')) ?>
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
+                    <?= $this->render('_backlog-form', compact('model', 'backlog')) ?>
                 </div>
             </div>
         </div>

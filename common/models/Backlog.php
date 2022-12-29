@@ -62,10 +62,10 @@ class Backlog extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'worker_id' => 'Worker ID',
-            'selling_id' => 'Selling ID',
-            'debtor_id' => 'Debtor ID',
-            'created_at' => 'Created At',
+            'worker_id' => 'Ishchi',
+            'selling_id' => 'Sotilgan mahsulot',
+            'debtor_id' => 'Qarzdor ismi',
+            'created_at' => 'Olingan vaqti',
         ];
     }
 
@@ -98,5 +98,8 @@ class Backlog extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Worker::class, ['id' => 'worker_id']);
     }
-    
+    public function getDebtorList()
+    {
+        return Debtor::findAll(['status' => Debtor::ACTIVE]);
+    }
 }
