@@ -29,7 +29,7 @@ AppAsset::register($this);
         <?= SideBarMenu::widget([
             'menuItem' => [
                 ['label' => 'Bosh menu', 'url' => Url::home(), 'icon' => 'home'],
-                ['label' => 'Mahsulotlar', 'url' => Url::to(['site/about']), 'icon' => 'shopping-cart']
+                ['label' => 'Qarzdorlar', 'url' => Url::to(['debtor/index']), 'icon' => 'alert-octagon']
             ]
         ]); ?>
         <main role="main" class="main-content">

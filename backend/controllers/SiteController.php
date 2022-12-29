@@ -20,7 +20,7 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        if (!isset($_SESSION['currency']) && $_SESSION['currency']['time'] < time() ) {
+        if (!isset($_SESSION['currency']) || $_SESSION['currency']['time'] < time() ) {
             GetCurrency::getCurrentCurrencyValue();
         }
         return $this->render('index');

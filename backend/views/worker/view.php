@@ -46,8 +46,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'password_hash',
                             'value' =>  $model->full_name
                         ],
-                        'type',
-                        'status',
+                        [
+                            'attribute' => 'type',
+                            'format' => 'html',
+                            'value' => $model->statusLabel
+                        ],
+                        [
+                            'attribute' => 'status',
+                            'format' => 'html',
+                            'value' => $model->typeLabel
+                        ],
                         'created_at:date',
                         'updated_at:date',
                     ],

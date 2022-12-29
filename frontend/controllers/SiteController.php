@@ -2,63 +2,19 @@
 
 namespace frontend\controllers;
 
+use backend\controllers\BaseController;
+use common\models\Selling;
 use Yii;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use frontend\models\SignupForm;
 use frontend\models\WorkerForm;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'actions' => ['login', 'signup'],
-                        'allow' => true,
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
 
     public $defaultAction = 'login';
-
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => \yii\web\ErrorAction::class,
-            ],
-            'captcha' => [
-                'class' => \yii\captcha\CaptchaAction::class,
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
-    }
 
     /**
      * Displays homepage.
@@ -67,7 +23,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new Selling();
+        return $this->render('index', compact('model'));
     }
 
     /**

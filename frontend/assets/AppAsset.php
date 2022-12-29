@@ -47,6 +47,7 @@ class AppAsset extends AssetBundle
         'js/uppy.min.js',
         'js/quill.min.js',
         'js/apps.js',
+        'js/script.js',
         'https://www.googletagmanager.com/gtag/js?id=UA-56159088-1',
     ];
     public $depends = [
