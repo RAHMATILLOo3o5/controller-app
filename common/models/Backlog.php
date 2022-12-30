@@ -14,6 +14,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int|null $selling_id
  * @property int|null $debtor_id
  * @property int|null $created_at
+ * @property int|null $backlog_amount
  *
  * @property Debtor $debtor
  * @property Selling $selling
@@ -49,6 +50,7 @@ class Backlog extends \yii\db\ActiveRecord
     {
         return [
             [['worker_id', 'selling_id', 'debtor_id', 'created_at'], 'integer'],
+            [['backlog_amount'], 'number'],
             [['debtor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Debtor::class, 'targetAttribute' => ['debtor_id' => 'id']],
             [['selling_id'], 'exist', 'skipOnError' => true, 'targetClass' => Selling::class, 'targetAttribute' => ['selling_id' => 'id']],
             [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => Worker::class, 'targetAttribute' => ['worker_id' => 'id']],
@@ -98,8 +100,36 @@ class Backlog extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Worker::class, ['id' => 'worker_id']);
     }
+
     public function getDebtorList()
     {
-        return Debtor::findAll(['status' => Debtor::ACTIVE]);
+        return Debtor::find()->orderBy(['full_name' => SORT_ASC])->all();
     }
+
+    /**
+     * > This function returns the sum of all the sell prices of the products that the current user has
+     * sold
+     */
+    public function getSellPrice()
+    {
+        $r = self::findAll(['worker_id' => Yii::$app->user->id]);
+        $arr = [];
+        foreach ($r as $k) {
+            $arr[] = Selling::findOne(['id' => $k->selling_id])->sell_price;
+        }
+
+        return number_format(array_sum($arr), 0, '.', ' ');
+    }
+
+    public function getBacklogAmount()
+    {
+        $r = self::findAll(['debtor_id' => $this->debtor_id]);
+        $arr = [];
+        foreach ($r as $k) {
+            $arr[] = Selling::findOne(['id' => $k->selling_id])->sell_price;
+        }
+
+        return array_sum($arr);
+    }
+
 }

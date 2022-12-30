@@ -19,6 +19,7 @@ class SellingController extends \yii\web\Controller
         if ($backlog->load(Yii::$app->request->post()) && $model->load(Yii::$app->request->post())) {
             $model->save();
             $backlog->selling_id = $model->id;
+            $backlog->backlog_amount = $model->sell_price;
             $backlog->save();
             return $this->redirect(Yii::$app->request->referrer);
         }

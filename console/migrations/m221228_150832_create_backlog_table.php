@@ -17,6 +17,7 @@ class m221228_150832_create_backlog_table extends Migration
             'worker_id' => $this->integer(),
             'selling_id' => $this->integer(),
             'debtor_id' => $this->integer(),
+            'backlog_amount' => $this->money(),
             'created_at' => $this->integer()
         ]);
         $this->addForeignKey('fk-from-backlog-to-worker', 'backlog', 'worker_id', 'worker', 'id', 'CASCADE');
