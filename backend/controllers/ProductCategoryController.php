@@ -2,10 +2,12 @@
 
 namespace backend\controllers;
 
+use common\models\Product;
 use common\models\ProductCategory;
 use common\models\search\ProductCategoryQuery;
 use kartik\form\ActiveForm;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -45,8 +47,14 @@ class ProductCategoryController extends BaseController
      */
     public function actionView($id)
     {
+        $products = new ActiveDataProvider(
+            [
+                'query' => Product::find()->where(['category_id' => $id])->orderBy(['id' => SORT_DESC])
+            ]
+        );
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'products' => $products
         ]);
     }
 
