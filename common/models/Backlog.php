@@ -113,12 +113,14 @@ class Backlog extends \yii\db\ActiveRecord
     public function getSellPrice()
     {
         $r = self::findAll(['worker_id' => Yii::$app->user->id]);
+
         $arr = [];
+
         foreach ($r as $k) {
             $arr[] = Selling::findOne(['id' => $k->selling_id])->sell_price;
         }
 
-        return number_format(array_sum($arr), 0, '.', ' ');
+        return array_sum($arr);
     }
 
     public function getBacklogAmount()

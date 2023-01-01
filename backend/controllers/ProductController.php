@@ -56,7 +56,7 @@ class ProductController extends BaseController
             if ($model->load($this->request->post())) {
                 $model->status = $model::STATUS_ACTIVE;
                 $model->converd_currency = $model->setConverdCurrency($model->product_purchase_price, $model->currency_price);
-                return $model->save() && $this->redirect(['view', 'id' => $model->id]);
+                return $model->save() && $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();

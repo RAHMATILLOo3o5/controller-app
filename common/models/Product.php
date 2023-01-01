@@ -245,7 +245,7 @@ class Product extends \yii\db\ActiveRecord
     {
         $response = self::find()->sum('converd_currency');
 
-        return $response;
+        return ($response == null) ? 0 : $response;
     }
 
     public function getCategory()

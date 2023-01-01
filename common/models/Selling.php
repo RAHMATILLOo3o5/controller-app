@@ -177,14 +177,21 @@ class Selling extends \yii\db\ActiveRecord
     public function getCashPrice()
     {
         $r = self::find()->where(['type_pay' => self::PAY_CASH, 'worker_id' => Yii::$app->user->id])->sum('sell_price');
-
-        return number_format($r, 0, '.', ' ') . 'so\'m';
+        if ($r == null) {
+            return 0;
+        } else {
+            return $r;
+        }
     }
 
     public function getOnlinePrice()
     {
         $r = self::find()->where(['type_pay' => self::PAY_ONLINE, 'worker_id' => Yii::$app->user->id])->sum('sell_price');
 
-        return number_format($r, 0, '.', ' ') . 'so\'m';
+        if ($r == null) {
+            return 0;
+        } else {
+            return $r;
+        }
     }
 }

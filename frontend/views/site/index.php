@@ -38,7 +38,7 @@ $this->title = 'Bosh menu';
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col">
-                                <span class="h2 mb-0"><?= $model->cashPrice ?></span>
+                                <span class="h2 mb-0"><?= number_format($model->cashPrice - $backlog->sellPrice, 0, '.', ' ') . 'so\'m' ?></span>
                                 <p class="small text-muted mb-0">Naqd pulga sotilgan mahsulotlar summasi</p>
                             </div>
                             <div class="col-auto">
@@ -68,7 +68,7 @@ $this->title = 'Bosh menu';
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col">
-                                <span class="h2 mb-0"><?= $backlog->sellPrice ?></span>
+                                <span class="h2 mb-0"><?= number_format($backlog->sellPrice, 0, '.', ' ') ?></span>
                                 <p class="small text-muted mb-0">Qarzga berilgan mahsulotlar summasi</p>
                             </div>
                             <div class="col-auto">
