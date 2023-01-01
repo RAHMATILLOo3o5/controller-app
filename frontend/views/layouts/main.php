@@ -36,7 +36,7 @@ AppAsset::register($this);
         ]); ?>
         <main role="main" class="main-content">
             <div class="container-fluid">
-                <?= $content ?>
+                <?= $content ?> 
             </div>
             <?= $this->render('footer') ?>
         </main>
