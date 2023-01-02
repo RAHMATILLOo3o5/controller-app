@@ -3,8 +3,10 @@
 namespace frontend\controllers;
 
 use backend\controllers\BaseController;
+use common\models\Backlog;
 use common\models\Debtor;
 use common\models\search\DebtorQuery;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -36,8 +38,12 @@ class DebtorController extends BaseController
      */
     public function actionView($id)
     {
+        $backlog = new ActiveDataProvider([
+            'query' => Backlog::find()->where(['debtor_id' => $id])
+        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'backlog' => $backlog
         ]);
     }
 
