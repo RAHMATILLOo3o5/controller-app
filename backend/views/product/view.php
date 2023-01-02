@@ -10,6 +10,9 @@ $this->title = $model->product_name;
 $this->params['breadcrumbs'][] = ['label' => 'Mahsulotlar', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+$f = $model->all_amount * $model->sellingProductAmount / 100;
+$q = $model->all_amount - $model->sellingProductAmount;
+$qf = $model->all_amount * $q / 100;
 ?>
 <div class="product-view">
 
@@ -105,10 +108,108 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h3 class="card-title">Mahsulotning sotilishi</h3>
                 </div>
                 <div class="card-body">
-
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="">
+                                <strong class="card-title">Sotish turlarining holati</strong>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="chart-box">
+                                        <div id="product-selling"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row align-items-center my-3">
+                                        <div class="col">
+                                            <strong>Umumiy</strong>
+                                            <div class="my-0 text-muted small">Umumiy mahsulot hajmi</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <strong>
+                                                <?= $model->allAmountFormat ?>
+                                            </strong>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center my-3">
+                                        <div class="col">
+                                            <strong>Sotildi</strong>
+                                            <div class="my-0 text-muted small">Sotilgan mahsulot hajmi</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <strong><?= $model->sellingProductAmount ?></strong>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar" role="progressbar" style="width: <?= $f ?>%" aria-valuenow="<?= $f ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center my-3">
+                                        <div class="col">
+                                            <strong>Qoldi</strong>
+                                            <div class="my-0 text-muted small">Do'konda qolgan mahsulot hajmi</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <strong><?= $q ?></strong>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar" role="progressbar" style="width: 62%" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
 </div>
+
+<?php
+
+$this->registerJs('var donutChartWidget,
+donutChartWidgetOptions = {
+  series: [44, 55, 100],
+  chart: {
+    type: "donut",
+    height: 180,
+    zoom: { enabled: !1 },
+    toolbar: { show: !1 },
+  },
+  theme: { mode: colors.chartTheme },
+  plotOptions: {
+    pie: {
+      donut: { size: "40%", background: "transparent" },
+      expandOnClick: !1,
+    },
+  },
+  labels: ["Qarzga", "Naqd pulga", "Plastikka"],
+  dataLabels: {
+    enabled: !0,
+    style: {
+      fontSize: "10px",
+      fontFamily: base.defaultFontFamily,
+      fontWeight: "300",
+    },
+  },
+  legend: { show: !1 },
+  stroke: { show: !1, colors: colors.borderColor, width: 1, dashArray: 0 },
+  fill: { opacity: 1, colors: ["#dc3545", "#1b68ff", "#3ad29f"] },
+},
+donutChartWidgetCtn = document.querySelector("#product-selling");
+donutChartWidgetCtn &&
+(donutChartWidget = new ApexCharts(
+  donutChartWidgetCtn,
+  donutChartWidgetOptions
+)).render();');
+?>
