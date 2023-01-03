@@ -134,4 +134,16 @@ class Backlog extends \yii\db\ActiveRecord
         return array_sum($arr);
     }
 
+    public function getDebtAmount()
+    {
+        $r = self::find()->where(['debtor_id' => $this->debtor_id])->sum('backlog_amount');
+        $a = $this->getBacklogAmount();
+
+        return $a - $r;
+    }
+
+    public function getPayAmount()
+    {
+        return $this->getBacklogAmount() - $this->getDebtAmount();
+    }
 }

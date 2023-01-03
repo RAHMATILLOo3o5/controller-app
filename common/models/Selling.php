@@ -29,6 +29,7 @@ class Selling extends \yii\db\ActiveRecord
     const TYPE_RETAIL = 0;
     const TYPE_GOOD = 10;
     const PAY_ONLINE = 0;
+    const PAY_DEBT = 5;
     const PAY_CASH = 10;
     /**
      * {@inheritdoc}

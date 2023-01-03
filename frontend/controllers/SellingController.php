@@ -16,10 +16,11 @@ class SellingController extends \yii\web\Controller
         $model = new Selling();
 
         $backlog = new Backlog();
+        
         if ($backlog->load(Yii::$app->request->post()) && $model->load(Yii::$app->request->post())) {
+            $model->type_pay = Selling::PAY_DEBT;
             $model->save();
             $backlog->selling_id = $model->id;
-            $backlog->backlog_amount = $model->sell_price;
             $backlog->save();
             return $this->redirect(Yii::$app->request->referrer);
         }
@@ -30,7 +31,6 @@ class SellingController extends \yii\web\Controller
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }
-
 
 
         if ($this->request->isAjax) {

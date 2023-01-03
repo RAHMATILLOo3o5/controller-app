@@ -60,12 +60,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-6">
             <div class="card p-2">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3>
-                        Olgan qarzlari
-                    </h3>
+                    
                     <div>
-                        <b>Umumiy qarz summasi</b>
+                        <b>Umumiy qarz summasi</b> <br>
                         <span><?= number_format($backlog->models[0]->backlogAmount, 2, '.', ' ') ?></span>
+                    </div>
+                    <div>
+                        <b>To'landi</b> <br>
+                        <span><?= number_format($backlog->models[0]->payAmount, 2, '.', ' ') ?></span>
+                    </div>
+                    <div>
+                        <b>Qoldi</b> <br>
+                        <span><?= number_format($backlog->models[0]->debtAmount, 2, '.', ' ') ?></span>
                     </div>
                 </div>
                 <div class="card-body p-0">

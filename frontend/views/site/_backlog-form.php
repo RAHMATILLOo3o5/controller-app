@@ -17,7 +17,10 @@ use yii\helpers\Url;
         'action' => Url::toRoute(['selling/index'])
     ]); ?>
     <?= $form->field($backlog, 'debtor_id')->widget(Select2::class, [
-        'data' => ArrayHelper::map($backlog->debtorList, 'id', 'full_name')
+        'data' => ArrayHelper::map($backlog->debtorList, 'id', 'full_name'),
+        'options' => [
+            'placeholder' => 'Qarzorlar'
+        ]
     ]) ?>
     <?= $form->field($model, 'category_id')->widget(Select2::class, [
         'data' => ArrayHelper::map($model->categoryList, 'id', 'category_name'),
@@ -41,7 +44,7 @@ use yii\helpers\Url;
 
     <?= $form->field($model, 'type_sell')->widget(Select2::class, [
         'data' => $model->sellList,
-        'hideSearch' => true, 
+        'hideSearch' => true,
         'options' => [
             'id' => 'sell-type'
         ]
@@ -60,7 +63,7 @@ use yii\helpers\Url;
             </div>
         </div>
     </div>
-    <?= $form->field($model, 'sell_amount')->textInput(['id' => 'sell_amount']) ?>
+    <?= $form->field($model, 'sell_amount')->textInput(['id' => 'sell_amount', 'required' => 'required']) ?>
     <div class="row">
         <div class="col-6">
             <div class="form-group">
@@ -75,14 +78,8 @@ use yii\helpers\Url;
             </div>
         </div>
     </div>
-    <?= $form->field($model, 'sell_price')->textInput(['id' => 'sell']) ?>
-    <?= $form->field($model, 'type_pay')->widget(Select2::class, [
-        'data' => $model->payList,
-        'hideSearch' => true,
-        'options' => [
-            'id' => 'sell-pay'
-        ]
-    ]) ?>
+    <?= $form->field($model, 'sell_price')->textInput(['id' => 'sell', 'required' => 'required']) ?>
+    <?= $form->field($backlog, 'backlog_amount')->textInput(['value' => 0])->label('Hozir to\'lamoqchi') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Saqlash', ['class' => 'btn btn-primary', 'id' => 'submit_button2']) ?>
