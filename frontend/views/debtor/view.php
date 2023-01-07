@@ -1,11 +1,13 @@
 <?php
 
+use kartik\form\ActiveForm;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 use yii\widgets\ListView;
 
-/** @var yii\web\View $this */
-/** @var common\models\Debtor $model */
+
+/* This is setting the title of the page, the breadcrumbs and registering the YiiAsset. */
 
 $this->title = $model->full_name;
 $this->params['breadcrumbs'][] = ['label' => 'Qarzdorlar', 'url' => ['index']];
@@ -53,25 +55,40 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="card-footer">
                     <h4>Qarzni to'lash</h4>
-
+                    <?php $f = ActiveForm::begin([
+                        'action' => Url::toRoute(['selling/pay-debt', 'id' => $debt->debtor_id])
+                    ]); ?>
+                    <div class="form-group">
+                        <label for="">Qarz miqdori:</label>
+                        <?= Html::input('text', 'debt-amount', $debt->remainingDebt, ['readonly' => true, 'class' => 'form-control', 'id' => 'debtamount-all_debt_amount']) ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="pay_summ">To'layabdi</label>
+                        <?= Html::input('number', 'pay_summ', '', ['class' => 'form-control', 'required' => true, 'id' => 'pay_summ']) ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="remain_sum">Qolgan summasi</label>
+                        <?= Html::input('number', 'remain_sum', '', ['class' => 'form-control', 'id' => 'remain_sum', 'readonly' =>  true]) ?>
+                    </div>
+                    <?= Html::submitButton('Saqlash', ['class' =>  'btn btn-success sbn']) ?>
+                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="card p-2">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    
                     <div>
                         <b>Umumiy qarz summasi</b> <br>
-                        <span><?= number_format($backlog->models[0]->backlogAmount, 2, '.', ' ') ?></span>
+                        <span><?= number_format($model->debtAmount->all_debt_amount, 2, '.', ' ') ?></span>
                     </div>
                     <div>
-                        <b>To'landi</b> <br>
-                        <span><?= number_format($backlog->models[0]->payAmount, 2, '.', ' ') ?></span>
+                        <b>To'lagam summasi</b> <br>
+                        <span class="text-success"><?= number_format($model->debtAmount->pay_debt, 2, '.', ' ') ?></span>
                     </div>
                     <div>
-                        <b>Qoldi</b> <br>
-                        <span><?= number_format($backlog->models[0]->debtAmount, 2, '.', ' ') ?></span>
+                        <b>Qolgan qarzi</b> <br>
+                        <span class="text-danger"><?= number_format($model->debtAmount->remainingDebt, 2, '.', ' ') ?></span>
                     </div>
                 </div>
                 <div class="card-body p-0">

@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use backend\controllers\BaseController;
 use common\models\Backlog;
+use common\models\DebtAmount;
 use common\models\Debtor;
 use common\models\search\DebtorQuery;
 use yii\data\ActiveDataProvider;
@@ -38,12 +39,22 @@ class DebtorController extends BaseController
      */
     public function actionView($id)
     {
+
         $backlog = new ActiveDataProvider([
             'query' => Backlog::find()->where(['debtor_id' => $id])
         ]);
+        $debt = DebtAmount::findOne(['debtor_id' => $id]);
+        $model = $this->findModel($id);
+
+        if ($debt->remainingDebt == 0) {
+            $model->status = Debtor::INACTIVE;
+            $model->save();
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
-            'backlog' => $backlog
+            'model' => $model,
+            'backlog' => $backlog,
+            'debt' => $debt
         ]);
     }
 
@@ -55,11 +66,16 @@ class DebtorController extends BaseController
     public function actionCreate()
     {
         $model = new Debtor();
+        $debt = new DebtAmount();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->status = $model::ACTIVE;
                 $model->save();
+                $debt->debtor_id = $model->id;
+                $debt->all_debt_amount = 0;
+                $debt->pay_debt = 0;
+                $debt->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

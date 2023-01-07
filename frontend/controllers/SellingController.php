@@ -7,7 +7,9 @@ use common\models\Selling;
 use Yii;
 use yii\web\Response;
 use common\models\Backlog;
+use common\models\DebtAmount;
 use yii\helpers\VarDumper;
+use yii\web\HttpException;
 
 class SellingController extends \yii\web\Controller
 {
@@ -16,13 +18,16 @@ class SellingController extends \yii\web\Controller
         $model = new Selling();
 
         $backlog = new Backlog();
-        
         if ($backlog->load(Yii::$app->request->post()) && $model->load(Yii::$app->request->post())) {
             $model->type_pay = Selling::PAY_DEBT;
             $model->save();
             $backlog->selling_id = $model->id;
-            $backlog->save();
-            return $this->redirect(Yii::$app->request->referrer);
+            if ($backlog->save()) {
+                $backlog->saved();
+                return $this->redirect(Yii::$app->request->referrer);
+            } else {
+                throw new HttpException('500', 'Serverning ichki xatosi qaytadan urinib ko\'ring');
+            }
         }
 
         if ($model->load(Yii::$app->request->post())) {
@@ -62,5 +67,22 @@ class SellingController extends \yii\web\Controller
             }
         }
         return ['output' => ''];
+    }
+
+    public function actionPayDebt($id)
+    {
+        $model = DebtAmount::findOne(['debtor_id' => $id]);
+
+        if (Yii::$app->request->isPost) {
+            $pay_summ = Yii::$app->request->post('pay_summ');
+            $model->pay_debt += $pay_summ;
+            if ($model->save()) {
+                return $this->redirect(Yii::$app->request->referrer);
+            } else {
+                throw new HttpException('500', 'Saqlab bo\'lmadi!');
+            }
+        }
+
+        return false;
     }
 }

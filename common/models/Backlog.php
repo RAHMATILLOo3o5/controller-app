@@ -123,6 +123,9 @@ class Backlog extends \yii\db\ActiveRecord
         return array_sum($arr);
     }
 
+    /**
+     * Qarzdorning umumiy qarzi
+     */
     public function getBacklogAmount()
     {
         $r = self::findAll(['debtor_id' => $this->debtor_id]);
@@ -134,6 +137,9 @@ class Backlog extends \yii\db\ActiveRecord
         return array_sum($arr);
     }
 
+    /**
+     * Qolgan qarzlari
+     */
     public function getDebtAmount()
     {
         $r = self::find()->where(['debtor_id' => $this->debtor_id])->sum('backlog_amount');
@@ -141,9 +147,27 @@ class Backlog extends \yii\db\ActiveRecord
 
         return $a - $r;
     }
-
+    /**
+     * To'lagan summasi
+     */
     public function getPayAmount()
     {
         return $this->getBacklogAmount() - $this->getDebtAmount();
+    }
+
+    public function saved()
+    {
+        $debtor = DebtAmount::findOne(['debtor_id' => $this->debtor_id]);
+        if (!empty($debtor)) {
+            $debtor->all_debt_amount = $this->getBacklogAmount();
+            $debtor->pay_debt = $this->getPayAmount();
+            return $debtor->save();
+        } else {
+            $debt = new DebtAmount();
+            $debt->debtor_id = $this->debtor_id;
+            $debt->all_debt_amount = $this->getBacklogAmount();
+            $debt->pay_debt = $this->backlog_amount;
+            return $debt->save();
+        }
     }
 }

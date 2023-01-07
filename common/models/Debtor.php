@@ -91,10 +91,20 @@ class Debtor extends \yii\db\ActiveRecord
 
     public function getStatusLabel()
     {
-        if($this->status == self::ACTIVE){
+        if ($this->status == self::ACTIVE) {
             return "<span class='badge badge-danger'>Qarzdor</span>";
-        } else{
+        } else {
             return "<span class='badge badge-success'>To'langan</span>";
         }
+    }
+
+   /**
+    * Get the debt amount for this debtor.
+    * 
+    * @return The DebtAmount model.
+    */
+    public function getDebtAmount()
+    {
+        return $this->hasOne(DebtAmount::class, ['debtor_id' => 'id']);
     }
 }
