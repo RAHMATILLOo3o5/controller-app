@@ -14,6 +14,11 @@ class m230107_084321_create_other_spent_table extends Migration
     {
         $this->createTable('{{%other_spent}}', [
             'id' => $this->primaryKey(),
+            'name' => $this->string()->notNull(),
+            'summ' => $this->money()->notNull(),
+            'status' => $this->smallInteger()->defaultValue(10),
+            'created_at' => $this->integer(),
+            'updated_at' =>  $this->integer()
         ]);
     }
 
