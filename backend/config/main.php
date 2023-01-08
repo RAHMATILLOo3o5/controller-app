@@ -29,7 +29,7 @@ return [
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'formatter' => [
-            'dateFormat' => 'd-M-Y',
+            'dateFormat' => 'dd-MM-Y',
             'datetimeFormat' => 'yyyy.m.d H:m:s',
         ],
         'session' => [

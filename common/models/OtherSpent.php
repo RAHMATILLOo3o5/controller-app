@@ -66,4 +66,14 @@ class OtherSpent extends \yii\db\ActiveRecord
             'updated_at' => 'O\'zgartirish vaqti',
         ];
     }
+
+    public function getFormatSumm(): string
+    {
+        return number_format($this->summ, 2, '.', ' '). " sum";
+    }
+
+    public function getAllSumm(): int
+    {
+        return self::find()->sum('summ');
+    }
 }

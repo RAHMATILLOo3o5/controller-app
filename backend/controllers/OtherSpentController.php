@@ -4,33 +4,13 @@ namespace backend\controllers;
 
 use common\models\OtherSpent;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * OtherSpentController implements the CRUD actions for OtherSpent model.
  */
-class OtherSpentController extends Controller
+class OtherSpentController extends BaseController
 {
-    /**
-     * @inheritDoc
-     */
-    public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
-
     /**
      * Lists all OtherSpent models.
      *
@@ -40,20 +20,20 @@ class OtherSpentController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => OtherSpent::find(),
-            /*
             'pagination' => [
-                'pageSize' => 50
+                'pageSize' => 30
             ],
             'sort' => [
                 'defaultOrder' => [
                     'id' => SORT_DESC,
                 ]
             ],
-            */
-        ]);
 
+        ]);
+        $model = new OtherSpent();
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'model' => $model
         ]);
     }
 
@@ -81,7 +61,7 @@ class OtherSpentController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
