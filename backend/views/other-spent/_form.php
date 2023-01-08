@@ -12,7 +12,7 @@ use yii\helpers\Url;
 <div class="mt-3">
 
     <?php $form = ActiveForm::begin([
-        'action' => Url::toRoute(['other-spent/create'])
+        'action' => (Yii::$app->request->get('id')) ? Url::toRoute(['other-spent/update', 'id' => Yii::$app->request->get('id')]) : Url::toRoute(['other-spent/create'])
     ]); ?>
 
     <div class="row">
@@ -23,7 +23,7 @@ use yii\helpers\Url;
             <?= $form->field($model, 'summ')->textInput(['placeholder' => 'Summasi'])->label(false) ?>
         </div>
         <div class="col-md-4">
-                <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
         </div>
     </div>
 

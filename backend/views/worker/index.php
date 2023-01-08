@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'status',
                         'filter' => [
                             '0' => 'Nofaol',
-                            '1'=>'Faol'
+                            '1' => 'Faol'
                         ],
                         'value' => 'statusLabel',
                         'format' => 'html'
@@ -78,6 +78,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
 
                 ],
+                'pager' => [
+                    'class' => LinkPager::class
+                ]
             ]); ?>
 
             <?php Pjax::end(); ?>

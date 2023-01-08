@@ -1,6 +1,7 @@
 <?php
 
 use common\models\OtherSpent;
+use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -25,7 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <h6>Umumiy hisobda sarflangan:</h6>
             <h5 class="text-danger ml-1"> <?= number_format($model->allSumm, 1, '.', ' ') ?> <span class="text-dark">sum</span></h5>
         </div>
-        <?php Pjax::begin(); ?>
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'template' => "{update} \n {delete}",
                     'buttons' => [
                         'update' => function ($url, $model) {
-                            return Html::a('<i class="fe fe-pen-tool"></i>', Url::to(['product-category/index', 'id' => $model->id]), ['class' => 'btn btn-primary btn-sm']);
+                            return Html::a('<i class="fe fe-pen-tool"></i>', Url::to(['other-spent/index', 'id' => $model->id]), ['class' => 'btn btn-primary btn-sm updt']);
                         },
                         'delete' => function ($url) {
                             return Html::a('<i class="fe fe-trash"></i>', $url, ['class' => 'btn btn-danger btn-sm', 'data-method' => 'post']);
@@ -70,9 +70,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ],
             ],
+            'pager' => [
+                'class' => LinkPager::class
+            ]
         ]); ?>
 
-        <?php Pjax::end(); ?>
     </div>
 
 </div>
