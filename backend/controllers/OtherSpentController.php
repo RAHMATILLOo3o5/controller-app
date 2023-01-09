@@ -6,6 +6,9 @@ use common\models\OtherSpent;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use Yii;
+use yii\db\Query;
+use yii\helpers\VarDumper;
+
 /**
  * OtherSpentController implements the CRUD actions for OtherSpent model.
  */
@@ -18,18 +21,19 @@ class OtherSpentController extends BaseController
      */
     public function actionIndex()
     {
+
         $dataProvider = new ActiveDataProvider([
             'query' => OtherSpent::find(),
             'pagination' => [
                 'pageSize' => 30
             ],
-            'sort' => [
+            'sort' =>[
                 'defaultOrder' => [
-                    'id' => SORT_DESC,
+                    'id' => SORT_DESC
                 ]
-            ],
-
+            ]
         ]);
+
         if (Yii::$app->request->get('id')) {
             $model = $this->findModel(Yii::$app->request->get('id'));
         } else {

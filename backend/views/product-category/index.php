@@ -62,6 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'tableOptions' => [
                         'class' => 'table'
                     ],
+                    'summary' => false,
                     'columns' => [
                         [
                             'attribute' => 'id',

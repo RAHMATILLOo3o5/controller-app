@@ -72,7 +72,7 @@ class OtherSpent extends \yii\db\ActiveRecord
         return number_format($this->summ, 2, '.', ' '). " sum";
     }
 
-    public function getAllSumm(): int
+    public function getAllSumm()
     {
         return self::find()->sum('summ');
     }
