@@ -16,6 +16,7 @@ class m221221_101408_create_product_category_table extends Migration
             'id' => $this->primaryKey(),
             'category_name' =>  $this->string()->notNull(),
             'unit' => $this->smallInteger()->defaultValue(0),
+            'status' => $this->smallInteger()->defaultValue(1),
             'created_at' => $this->integer()
         ]);
     }
