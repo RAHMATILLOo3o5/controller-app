@@ -45,8 +45,11 @@ return [
             'rules' => [
                 [
                     'class' => \yii\rest\UrlRule::class,
-                    'controller' => ['user', 'product', 'category', 'worker']
-                ]
+                    'controller' => ['user', 'product', 'category', 'worker'],
+                    'pluralize' => false
+                ],
+                '/seller' => 'selling/<action>',
+                '/seller/debtor' => 'debtor<action>',
             ],
         ],
 
