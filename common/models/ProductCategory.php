@@ -11,6 +11,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $id
  * @property string $category_name
  * @property int|null $unit
+ * @property int|null $status
  * @property int|null $created_at
  */
 class ProductCategory extends \yii\db\ActiveRecord
@@ -45,7 +46,7 @@ class ProductCategory extends \yii\db\ActiveRecord
         return [
             [['category_name'], 'required'],
             [['unit', 'created_at'], 'default', 'value' => 0],
-            [['unit', 'created_at'], 'integer'],
+            [['unit', 'created_at', 'status'], 'integer'],
             [['category_name'], 'string', 'max' => 255],
         ];
     }
