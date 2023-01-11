@@ -2,6 +2,8 @@
 
 namespace restapi\controllers;
 
+use common\models\User;
+use yii\filters\auth\HttpBasicAuth;
 use yii\filters\Cors;
 use yii\rest\ActiveController;
 
@@ -24,6 +26,20 @@ class BaseController extends ActiveController
                 'Access-Control-Allow-Credentials' => true,
                 'Access-Control-Max-Age' => 86400,
             ],
+        ];
+        $behaviors['authenticator']['only'] = ['create', 'update', 'delete'];
+        $behaviors['authenticator'] = [
+            'class' => HttpBasicAuth::class,
+            'auth' => function ($username, $password) {
+                $user = null;
+                $_user = User::findByUsername($username);
+                if ($_user != null) {
+                    if ($_user->validatePassword($password)) {
+                        $user = $_user;
+                    }
+                }
+                return $user;
+            }
         ];
 
         return $behaviors;
