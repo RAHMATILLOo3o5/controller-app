@@ -7,6 +7,8 @@ use common\models\search\ProductQuery;
 use Yii;
 use yii\web\NotFoundHttpException;
 use backend\models\ProductBackendModel;
+use common\models\Selling;
+use yii\data\ActiveDataProvider;
 use yii\helpers\VarDumper;
 
 /**
@@ -38,8 +40,10 @@ class ProductController extends BaseController
      */
     public function actionView($id)
     {
+        $query = Selling::find()->orderBy(['id' => SORT_DESC])->where(['product_id' => $id]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'selling_list' => new ActiveDataProvider(['query' => $query])
         ]);
     }
 
@@ -69,11 +73,11 @@ class ProductController extends BaseController
     public function actionOneCreate()
     {
         $model = new OneOfProduct();
-        if(Yii::$app->request->isPost && $model->load($this->request->post())){
+        if (Yii::$app->request->isPost && $model->load($this->request->post())) {
 
             $model->save();
             return $this->redirect(['index']);
-        } else{
+        } else {
             return $this->redirect(['create']);
         }
     }

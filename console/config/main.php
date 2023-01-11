@@ -1,5 +1,7 @@
 <?php
 
+use console\controllers\ReportCommand;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -20,7 +22,8 @@ return [
         'fixture' => [
             'class' => \yii\console\controllers\FixtureController::class,
             'namespace' => 'common\fixtures',
-          ],
+        ],
+        'report' => ReportCommand::class
     ],
     'components' => [
         'log' => [
@@ -30,6 +33,11 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'queue' => [
+            'class' => \yii\queue\redis\Queue::class,
+            'redis' => 'redis',
+            'channel' => 'queue',
         ],
     ],
     'params' => $params,

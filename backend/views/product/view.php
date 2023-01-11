@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ListView;
 
 /** @var yii\web\View $this */
 /** @var common\models\Product $model */
@@ -172,16 +173,41 @@ $qf = $model->all_amount * $q / 100;
             </div>
         </div>
     </div>
-
+    <div class="row mt-2">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="d-md-flex justify-content-between">
+                        <strong class="h6 card-title">Sotish ro'yhati</strong>
+                        <div class="div">
+                            <strong>Kelgan Umumiy Summa:</strong>
+                            <span><?= number_format($model->allSumm, 2, '.', ' ') ?> sum</span>
+                        </div>
+                        <div class="div">
+                            <strong>Yana kelishi mumkin taxminiy:</strong>
+                            <span><?= number_format($model->aboutSumm, 2, '.', ' ') ?> sum</span>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <?= ListView::widget([
+                            'dataProvider' => $selling_list,
+                            'summary' => false,
+                            'itemView' => '_selling-list'
+                        ]) ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?php
 
-$this->registerJs('var donutChartWidget,
+$this->registerJs("var donutChartWidget,
 donutChartWidgetOptions = {
-  series: [44, 55, 100],
+  series: [{$model->debtProductAmount}, {$model->cashProductAmount}, {$model->onlineProductAmount}],
   chart: {
-    type: "donut",
+    type: \"donut\",
     height: 180,
     zoom: { enabled: !1 },
     toolbar: { show: !1 },
@@ -189,27 +215,27 @@ donutChartWidgetOptions = {
   theme: { mode: colors.chartTheme },
   plotOptions: {
     pie: {
-      donut: { size: "40%", background: "transparent" },
+      donut: { size: \"40%\", background: \"transparent\" },
       expandOnClick: !1,
     },
   },
-  labels: ["Qarzga", "Naqd pulga", "Plastikka"],
+  labels: ['Qarzga', 'Naqd pulga', 'Plastikka'],
   dataLabels: {
     enabled: !0,
     style: {
-      fontSize: "10px",
+      fontSize: '10px',
       fontFamily: base.defaultFontFamily,
-      fontWeight: "300",
+      fontWeight: '300',
     },
   },
   legend: { show: !1 },
   stroke: { show: !1, colors: colors.borderColor, width: 1, dashArray: 0 },
-  fill: { opacity: 1, colors: ["#dc3545", "#1b68ff", "#3ad29f"] },
+  fill: { opacity: 1, colors: ['#dc3545', '#1b68ff', '#3ad29f'] },
 },
-donutChartWidgetCtn = document.querySelector("#product-selling");
+donutChartWidgetCtn = document.querySelector('#product-selling');
 donutChartWidgetCtn &&
 (donutChartWidget = new ApexCharts(
   donutChartWidgetCtn,
   donutChartWidgetOptions
-)).render();');
+)).render();");
 ?>
