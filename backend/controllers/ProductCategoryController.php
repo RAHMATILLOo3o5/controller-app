@@ -113,8 +113,9 @@ class ProductCategoryController extends BaseController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $m = $this->findModel($id);
+        $m->status = 0;
+        $m->save();
         return $this->redirect(['index']);
     }
 
@@ -127,7 +128,7 @@ class ProductCategoryController extends BaseController
      */
     protected function findModel($id)
     {
-        if (($model = ProductCategory::findOne(['id' => $id])) !== null) {
+        if (($model = ProductCategory::findOne(['id' => $id, 'status' => 1])) !== null) {
             return $model;
         }
 
