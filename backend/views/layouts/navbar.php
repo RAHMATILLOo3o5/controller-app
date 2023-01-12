@@ -21,6 +21,7 @@ use yii\helpers\Url;
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="<?= Url::to(['/site/setting']) ?>">Profil sozlamari</a>
+                <a class="dropdown-item text-danger" href="<?= Url::to(['/site/logout']) ?>" data-method="post">Profildan chiqish</a>
             </div>
         </li>
     </ul>

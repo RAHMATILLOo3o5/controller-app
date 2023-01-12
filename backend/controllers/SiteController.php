@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\ChangePassword;
 use common\models\LoginForm;
 use common\models\User;
 use Yii;
@@ -66,7 +67,16 @@ class SiteController extends BaseController
 
     public function actionSetting()
     {
-        $model = User::findOne(['id' => Yii::$app->user->id]);
+        $model = new ChangePassword();
+
+        if($this->request->isPost && $model->load($this->request->post())){
+            if($model->save()){
+                return $this->goHome();
+            } else{
+                Yii::$app->session->setFlash('danger', 'Saqlanmai');
+            }
+        }
+
         return $this->render('setting', compact('model'));
     }
 }
