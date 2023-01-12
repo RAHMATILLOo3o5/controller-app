@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\models\User;
 use Yii;
 use yii\web\Response;
 use component\GetCurrency;
@@ -65,6 +66,7 @@ class SiteController extends BaseController
 
     public function actionSetting()
     {
-        return $this->render('setting');
+        $model = User::findOne(['id' => Yii::$app->user->id]);
+        return $this->render('setting', compact('model'));
     }
 }
