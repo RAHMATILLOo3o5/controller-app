@@ -1,3 +1,7 @@
+<?php
+
+use yii\helpers\Url;
+?>
 <nav class="topnav navbar navbar-light">
     <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
         <i class="fe fe-menu navbar-toggler-icon"></i>
@@ -20,7 +24,7 @@
               </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Profil sozlamari</a>
+                <a class="dropdown-item" href="<?= Url::to(['/site/setting']) ?>">Profil sozlamari</a>
             </div>
         </li>
     </ul>
