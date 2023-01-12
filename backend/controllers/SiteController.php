@@ -62,4 +62,9 @@ class SiteController extends BaseController
 
         return $this->goHome();
     }
+
+    public function actionSetting()
+    {
+        return $this->render('setting');
+    }
 }

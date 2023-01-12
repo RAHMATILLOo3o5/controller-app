@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-body">
         <div class="d-flex align-items-center">
             <h6>Umumiy hisobda sarflangan:</h6>
-            <h5 class="text-danger ml-1"> <?= number_format($model->allSumm, 1, '.', ' ') ?> <span class="text-dark">sum</span></h5>
+            <h5 class="text-danger ml-1"> <?= number_format(($model->allSumm != null) ? $model->allSumm : 0, 1, '.', ' ') ?> <span class="text-dark">sum</span></h5>
         </div>
 
         <?= GridView::widget([

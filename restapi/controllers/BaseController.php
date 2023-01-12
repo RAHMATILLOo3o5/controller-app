@@ -9,6 +9,7 @@ use yii\rest\ActiveController;
 
 class BaseController extends ActiveController
 {
+    
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
@@ -27,6 +28,7 @@ class BaseController extends ActiveController
                 'Access-Control-Max-Age' => 86400,
             ],
         ];
+        
         $behaviors['authenticator']['only'] = ['create', 'update', 'delete'];
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::class,
@@ -41,7 +43,7 @@ class BaseController extends ActiveController
                 return $user;
             }
         ];
-
+         
         return $behaviors;
     }
 }

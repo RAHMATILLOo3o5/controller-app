@@ -37,12 +37,13 @@ class CategoryController extends BaseController
         ]);
     }
 
+
     public function actionUpdate($id)
     {
         $model  = $this->findModel($id);
         if ($this->request->isPut || $this->request->isPatch) {
             if($model->load(Yii::$app->request->post(), '')){
-                return $model->category_name;
+                return $this->request->post();
             }
         }
     }
@@ -54,13 +55,6 @@ class CategoryController extends BaseController
         return $model->save();
     }
 
-    /**
-     * Finds the ProductCategory model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return ProductCategory the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = CategoryModel::findOne(['id' => $id, 'status' => 1])) !== null) {
