@@ -20,7 +20,6 @@ class CategoryController extends BaseController
         $action = parent::actions();
 
         unset($action['delete']);
-        unset($action['update']);
         $action['index']['prepareDataProvider'] = [$this, 'dataProvider'];
         return $action;
     }
@@ -38,16 +37,6 @@ class CategoryController extends BaseController
     }
 
 
-    public function actionUpdate($id)
-    {
-        $model  = $this->findModel($id);
-        if ($this->request->isPut || $this->request->isPatch) {
-            if($model->load(Yii::$app->request->post(), '')){
-                return $this->request->post();
-            }
-        }
-    }
-
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -61,6 +50,6 @@ class CategoryController extends BaseController
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('Bu sahifa mavjud emas!.');
     }
 }

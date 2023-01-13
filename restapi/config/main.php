@@ -1,4 +1,7 @@
 <?php
+
+use yii\web\MultipartFormDataParser;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -17,6 +20,10 @@ return [
         'request' => [
             'csrfParam' => '_csrf-restapi',
             'baseUrl' => '/api',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+                'multipart/form-data' => 'yii\web\MultipartFormDataParser'
+            ],
         ],
         'user' => [
             'identityClass' => 'common\models\User',
