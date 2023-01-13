@@ -12,7 +12,6 @@ return [
     'controllerNamespace' => 'restapi\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
-    'defaultRoute' => 'product',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-restapi',
@@ -23,9 +22,8 @@ return [
             'enableAutoLogin' => true,
             'enableSession' => false,
             'loginUrl' => null,
-            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity-api', 'httpOnly' => true],
         ],
-
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -43,6 +41,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'auth' => 'user/login',
                 [
                     'class' => \yii\rest\UrlRule::class,
                     'controller' => ['user', 'product', 'category', 'worker'],

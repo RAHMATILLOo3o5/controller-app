@@ -3,9 +3,10 @@
 namespace restapi\controllers;
 
 use common\models\User;
-use yii\filters\auth\HttpBasicAuth;
+use yii\filters\auth\HttpBearerAuth;
 use yii\filters\Cors;
 use yii\rest\ActiveController;
+use yii\rest\Controller;
 
 class BaseController extends ActiveController
 {
@@ -31,17 +32,7 @@ class BaseController extends ActiveController
         
         $behaviors['authenticator']['only'] = ['create', 'update', 'delete'];
         $behaviors['authenticator'] = [
-            'class' => HttpBasicAuth::class,
-            'auth' => function ($username, $password) {
-                $user = null;
-                $_user = User::findByUsername($username);
-                if ($_user != null) {
-                    if ($_user->validatePassword($password)) {
-                        $user = $_user;
-                    }
-                }
-                return $user;
-            }
+            'class' => HttpBearerAuth::class,
         ];
          
         return $behaviors;
