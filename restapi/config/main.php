@@ -12,6 +12,7 @@ return [
     'controllerNamespace' => 'restapi\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    'defaultRoute' => 'user',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-restapi',
