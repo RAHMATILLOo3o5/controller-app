@@ -6,7 +6,8 @@ use restapi\models\ProductModel;
 use Yii;
 use yii\helpers\VarDumper;
 
-class ProductController extends BaseController{
+class ProductController extends BaseController
+{
 
     public $modelClass = ProductModel::class;
 
@@ -20,17 +21,17 @@ class ProductController extends BaseController{
         return $action;
     }
 
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new ProductModel();
 
-        if(Yii::$app->request->isPost && $model->load(Yii::$app->request->post())){
-            VarDumper::dump($model);
-            return false;
-        } else{
-            VarDumper::dump($model->errors);
-            return false;
-        }
-        
-    }
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post(), '')) {
+            $model->status = $model::STATUS_ACTIVE;
+            $model->converd_currency = $model->setConverdCurrency($model->product_purchase_price, $model->currency_price);
 
+            return ($model->save()) ? $model : null;
+        } else {
+            return $model->errors;
+        }
+    }
 }

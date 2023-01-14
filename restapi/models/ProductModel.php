@@ -3,7 +3,51 @@
 namespace restapi\models;
 
 use common\models\Product;
+use restapi\models\CategoryModel;
 
-class ProductModel extends Product{
-    
+class ProductModel extends Product
+{
+
+    public function getCategory()
+    {
+        return $this->hasOne(CategoryModel::class, ['id' => 'category_id']);
+    }
+
+    public function fields()
+    {
+        return [
+            'product_name',
+            'amount',
+            'every_amount',
+            'all_amount',
+            'product_purchase_price',
+            'currency_price',
+            'min_sell_price_retail',
+            'max_sell_price_retail',
+            'min_sell_price_good',
+            'max_sell_price_good',
+            'type_of_currency' => function ($model) {
+                if ($model->type_of_currency == $model::USD) {
+                    return "AQSH dollari";
+                } elseif ($model->type_of_currency == $model::EURO) {
+                    return "Yevro";
+                } elseif ($model->type_of_currency == $model::RUB) {
+                    return "RUBL";
+                } else {
+                    return "SUM";
+                }
+            },
+            'created_at' => function ($model) {
+                return date('Y-m-d H:i:s', $model->created_at);
+            }
+
+        ];
+    }
+
+    public function extraFields()
+    {
+        return [
+            'category'
+        ];
+    }
 }

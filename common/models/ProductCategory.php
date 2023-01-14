@@ -85,7 +85,7 @@ class ProductCategory extends \yii\db\ActiveRecord
 
     public function getProduct()
     {
-        return $this->hasMany(Product::class, ['id' => 'category_id']);
+        return $this->hasMany(Product::class, ['category_id' => 'id']);
     }
 
 }
