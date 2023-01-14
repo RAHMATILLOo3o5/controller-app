@@ -15,4 +15,12 @@ class CategoryModel extends ProductCategory
             'created_at'
         ];
     }
+
+    public function extraFields()
+    {
+        return [
+            'products' => 'product'
+        ];
+    }
+
 }

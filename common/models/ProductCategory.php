@@ -82,4 +82,10 @@ class ProductCategory extends \yii\db\ActiveRecord
             return "<span class='badge badge-primary ml-1'> DONA</span>";
         }
     }
+
+    public function getProduct()
+    {
+        return $this->hasMany(Product::class, ['id' => 'category_id']);
+    }
+
 }
