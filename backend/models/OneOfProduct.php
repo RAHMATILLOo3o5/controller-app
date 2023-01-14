@@ -85,6 +85,6 @@ class OneOfProduct extends Model
 
     public function getCategoryList()
     {
-        return ProductCategory::find()->orderBy(['id' => SORT_DESC])->all();
+        return ProductCategory::find()->where(['status'=>1])->orderBy(['id' => SORT_DESC])->all();
     }
 }
