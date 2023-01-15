@@ -2,6 +2,7 @@
 
 use component\NumberFormatter;
 use yii\helpers\Html;
+use yii\helpers\VarDumper;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
@@ -11,6 +12,8 @@ $this->title = $model->full_name;
 $this->params['breadcrumbs'][] = ['label' => 'Ishchilar', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
+
 ?>
 <div class="row">
 
@@ -76,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="row mt-4">
                     <div class="col-4 text-center">
                         <div class="mt-2">
-                            <strong><?= NumberFormatter::letterFormat(15050) ?> sum</strong><br />
+                            <strong><?= NumberFormatter::letterFormat($model->allSum) ?> sum</strong><br />
                             <span class="my-0 text-muted small">Keltirgan umumiy summasi</span>
                         </div>
                     </div>

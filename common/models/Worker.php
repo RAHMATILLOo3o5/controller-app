@@ -263,9 +263,24 @@ class Worker extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function getTypeLabel(): string
     {
-        if($this->type == self::ADMIN){
+        if ($this->type == self::ADMIN) {
             return "<span class='badge badge-info'>Adminlik huquqi mavjud</span>";
         }
         return "<span class='badge badge-primary'>Ishchi</span>";
+    }
+
+    public function getAllSum()
+    {
+        $sum = Selling::find()->where(['worker_id' => $this->id])->sum('sell_price');
+        return $sum;
+    }
+
+    public function getDebtAmount()
+    {
+        $r = Backlog::find()->where(['worker_id' => $this->id])->all();
+        $arr = [];
+        foreach ($r as $rs) {
+            
+        }
     }
 }
