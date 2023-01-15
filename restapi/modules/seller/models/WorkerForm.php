@@ -8,7 +8,7 @@ use Yii;
 
 class WorkerForm extends Model
 {
-    public $username;
+    public $phone_number;
     public $password;
     public $rememberMe = true;
 
@@ -21,8 +21,8 @@ class WorkerForm extends Model
     public function rules()
     {
         return [
-            // username and password are both required
-            [['username', 'password'], 'required'],
+            // phone_number and password are both required
+            [['phone_number', 'password'], 'required'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
@@ -50,7 +50,7 @@ class WorkerForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => 'Telefon raqam',
+            'phone_number' => 'Telefon raqam',
             'password' => 'Parol',
             'remeberMe' => 'Meni eslab qol'
         ];
@@ -78,7 +78,7 @@ class WorkerForm extends Model
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = Worker::findByUsername($this->username);
+            $this->_user = Worker::findByUsername($this->phone_number);
         }
 
         return $this->_user;

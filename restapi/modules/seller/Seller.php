@@ -2,7 +2,7 @@
 
 namespace restapi\modules\seller;
 
-use restapi\modules\worker\Worker;
+use common\models\Worker;
 use Yii;
 use yii\web\User;
 

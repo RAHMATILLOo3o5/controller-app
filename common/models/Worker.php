@@ -90,7 +90,9 @@ class Worker extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        $user = SellerToken::findOne(['token' => $token]);
+
+        return self::findOne(['id' => $user->user_id]);
     }
 
     /**
