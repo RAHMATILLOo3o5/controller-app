@@ -2,8 +2,11 @@
 
 namespace backend\controllers;
 
+use backend\models\ProductBackendModel;
 use common\models\Worker;
 use common\models\search\WorkerQuery;
+use common\models\Selling;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,8 +40,13 @@ class WorkerController extends BaseController
      */
     public function actionView($id)
     {
+        $worker = $this->findModel($id);
+        $product = new ActiveDataProvider([
+            'query' => Selling::find()->where(['worker_id' => $id])
+        ]);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $worker,
+            'product' => $product
         ]);
     }
 

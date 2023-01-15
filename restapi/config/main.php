@@ -55,8 +55,6 @@ return [
                     'controller' => ['user', 'product', 'category', 'worker'],
                     'pluralize' => false
                 ],
-                '/seller' => 'selling/<action>',
-                '/seller/debtor' => 'debtor<action>',
             ],
         ],
 

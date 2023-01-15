@@ -1,5 +1,6 @@
 <?php
 
+use component\NumberFormatter;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -69,8 +70,67 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h3 class="card-title">Ishchining ko'rsatkichlari</h3>
             </div>
             <div class="card-body">
-                
+                <div class="mb-2">
+                    <div id="workerStat"></div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-4 text-center">
+                        <div class="mt-2">
+                            <strong><?= NumberFormatter::letterFormat(15050) ?> sum</strong><br />
+                            <span class="my-0 text-muted small">Keltirgan umumiy summasi</span>
+                        </div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div class="mt-2">
+                            <strong>175</strong><br />
+                            <span class="my-0 text-muted small">Qarzga bergan summasi</span>
+                        </div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div class="mt-2">
+                            <strong>126</strong><br />
+                            <span class="my-0 text-muted small">Naqd shakldagisi</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<?php
+$this->registerJs('var pieChartWidget,
+pieChartWidgetOptions = {
+  series: [686, 575, 426],
+  chart: {
+    type: "donut",
+    height: 160,
+    zoom: { enabled: !1 },
+    toolbar: { show: !1 },
+  },
+  theme: { mode: colors.chartTheme },
+  plotOptions: { pie: { donut: { size: "0" }, expandOnClick: !1 } },
+  labels: ["Qarzga", "Naqd", "Plastik"],
+  dataLabels: {
+    enabled: !0,
+    style: {
+      fontSize: "10px",
+      fontFamily: base.defaultFontFamily,
+      fontWeight: "300",
+    },
+  },
+  legend: { show: !1 },
+  stroke: {
+    show: !1,
+    colors: extend.primaryColorLight,
+    width: 1,
+    dashArray: 0,
+  },
+  fill: { opacity: 1, colors: ["#dc3545", "#1b68ff", "#3ad29f"] },
+},
+pieChartWidgetCtn = document.querySelector("#workerStat");
+pieChartWidgetCtn &&
+(pieChartWidget = new ApexCharts(
+  pieChartWidgetCtn,
+  pieChartWidgetOptions
+)).render();');
