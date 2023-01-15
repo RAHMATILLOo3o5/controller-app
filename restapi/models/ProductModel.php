@@ -16,6 +16,7 @@ class ProductModel extends Product
     public function fields()
     {
         return [
+            'id',
             'product_name',
             'amount',
             'every_amount',
@@ -37,9 +38,7 @@ class ProductModel extends Product
                     return "SUM";
                 }
             },
-            'created_at' => function ($model) {
-                return date('Y-m-d H:i:s', $model->created_at);
-            }
+            'created_at'
 
         ];
     }
