@@ -14,7 +14,11 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'restapi\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'seller' => [
+            'class' => 'restapi\modules\seller\Seller',
+        ]
+    ],
     'defaultRoute' => 'user',
     'components' => [
         'request' => [
@@ -50,6 +54,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'auth' => 'user/login',
+                '/seller/auth' => 'seller/',
                 [
                     'class' => \yii\rest\UrlRule::class,
                     'controller' => ['user', 'product', 'category', 'worker'],

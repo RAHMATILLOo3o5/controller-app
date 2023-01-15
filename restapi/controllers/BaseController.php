@@ -6,7 +6,6 @@ use common\models\User;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\Cors;
 use yii\rest\ActiveController;
-use yii\rest\Controller;
 
 class BaseController extends ActiveController
 {

@@ -3,11 +3,7 @@
 namespace restapi\controllers;
 
 use restapi\models\CategoryModel;
-use Yii;
-use yii\base\NotSupportedException;
 use yii\data\ActiveDataProvider;
-use yii\db\conditions\NotCondition;
-use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
 
 

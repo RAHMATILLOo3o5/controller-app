@@ -275,12 +275,5 @@ class Worker extends \yii\db\ActiveRecord implements IdentityInterface
         return $sum;
     }
 
-    public function getDebtAmount()
-    {
-        $r = Backlog::find()->where(['worker_id' => $this->id])->all();
-        $arr = [];
-        foreach ($r as $rs) {
-            
-        }
-    }
+
 }

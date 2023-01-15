@@ -4,7 +4,6 @@ namespace restapi\controllers;
 
 use restapi\models\ProductModel;
 use Yii;
-use yii\helpers\VarDumper;
 
 class ProductController extends BaseController
 {
