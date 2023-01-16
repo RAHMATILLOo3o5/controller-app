@@ -45,18 +45,6 @@ class OtherSpentController extends BaseController
         ]);
     }
 
-    /**
-     * Displays a single OtherSpent model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
 
     /**
      * Creates a new OtherSpent model.
@@ -75,9 +63,6 @@ class OtherSpentController extends BaseController
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
