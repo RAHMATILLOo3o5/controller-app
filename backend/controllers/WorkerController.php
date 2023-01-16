@@ -106,8 +106,10 @@ class WorkerController extends BaseController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $worker = $this->findModel($id);
 
+        $worker->status = Worker::STATUS_DELETED;
+        $worker->save();
         return $this->redirect(['index']);
     }
 
