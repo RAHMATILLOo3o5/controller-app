@@ -151,12 +151,12 @@ class Selling extends \yii\db\ActiveRecord
 
     public function getCategoryList()
     {
-        return ProductCategory::find()->orderBy(['id' => SORT_DESC])->all();
+        return ProductCategory::find()->orderBy(['id' => SORT_DESC])->where(['status' => 1])->all();
     }
 
     public function getProductList()
     {
-        return Product::find()->orderBy(['id' => SORT_DESC])->all();
+        return Product::find()->orderBy(['id' => SORT_DESC])->where(['status' => Product::STATUS_ACTIVE])->all();
     }
 
     public function getProductSellPrice($id, $type_sell): array
