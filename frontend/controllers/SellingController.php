@@ -58,7 +58,7 @@ class SellingController extends \yii\web\Controller
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
             $id = end($_POST['depdrop_parents']);
-            $list = Product::find()->andWhere(['category_id' => $id])->all();
+            $list = Product::find()->andWhere(['category_id' => $id, 'status' => Product::STATUS_ACTIVE])->all();
             if ($id != null && count($list) > 0) {
                 foreach ($list as $account) {
                     $out[] = ['id' => $account->id, 'name' => $account->product_name];

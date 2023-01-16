@@ -7,6 +7,7 @@ use common\models\search\ProductQuery;
 use Yii;
 use yii\web\NotFoundHttpException;
 use backend\models\ProductBackendModel;
+use common\models\Product;
 use common\models\Selling;
 use yii\data\ActiveDataProvider;
 use yii\helpers\VarDumper;
@@ -111,8 +112,9 @@ class ProductController extends BaseController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $product = $this->findModel($id);
+        $product->status = $product::STATUS_DELETE;
+        $product->save();
         return $this->redirect(['index']);
     }
 
@@ -125,7 +127,7 @@ class ProductController extends BaseController
      */
     protected function findModel($id)
     {
-        if (($model = ProductBackendModel::findOne(['id' => $id])) !== null) {
+        if (($model = ProductBackendModel::findOne(['id' => $id, 'status'=> Product::STATUS_ACTIVE])) !== null) {
             return $model;
         }
 

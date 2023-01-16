@@ -38,8 +38,14 @@ class ProductModel extends Product
                     return "SUM";
                 }
             },
+            'status' => function($model){
+                if($model->status == self::STATUS_ACTIVE){
+                    return "FAOL";
+                } elseif($model->status == self::STATUS_INACTIVE){
+                    return "NOFAOL";
+                } return "O'CHIRILGAN";
+            },
             'created_at'
-
         ];
     }
 

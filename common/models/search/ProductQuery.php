@@ -42,7 +42,7 @@ class ProductQuery extends ProductBackendModel
      */
     public function search($params)
     {
-        $query = Product::find();
+        $query = Product::find()->where(['status' => Product::STATUS_ACTIVE]);
 
         // add conditions that should always apply here
 
