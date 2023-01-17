@@ -40,6 +40,7 @@ AppAsset::register($this);
                 ['label' => 'Kataloglar', 'url' => Url::to(['product-category/index']), 'icon' => 'server'],
                 ['label' => 'Mahsulotlar', 'url' => Url::to(['product/index']), 'icon' => 'shopping-cart'],
                 ['label' => 'Ishchilar', 'url' => Url::to(['worker/index']), 'icon' => 'users'],
+                ['label' => 'Qarzdorlik daftari', 'url' => Url::to(['debtor/index']), 'icon' => 'alert-octagon'],
                 ['label' => 'Boshqa harajatlar', 'url' => Url::to(['other-spent/index']), 'icon' => 'list'],
                 ['label' => 'Statistika', 'url' => Url::to(['statistics/index']), 'icon' => 'activity']
             ]
