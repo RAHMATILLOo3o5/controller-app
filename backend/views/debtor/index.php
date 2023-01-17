@@ -19,9 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="card p-2">
-        <p>
-            <?= Html::a('Qarzdor qo\'shish', ['create'], ['class' => 'btn btn-success']) ?>
-        </p>
 
         <?php Pjax::begin(); ?>
         <div class="table-responsive">
