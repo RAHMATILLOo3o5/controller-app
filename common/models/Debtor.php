@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use restapi\models\WorkerModel;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -86,7 +87,7 @@ class Debtor extends \yii\db\ActiveRecord
      */
     public function getAuthor()
     {
-        return $this->hasOne(Worker::class, ['id' => 'author_id']);
+        return $this->hasOne(WorkerModel::class, ['id' => 'author_id']);
     }
 
     public function getStatusLabel()
