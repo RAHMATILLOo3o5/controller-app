@@ -37,7 +37,6 @@ class SellingController extends \yii\web\Controller
             }
         }
 
-
         if ($this->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $product_id = Yii::$app->request->post('product_id');
