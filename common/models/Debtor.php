@@ -101,7 +101,7 @@ class Debtor extends \yii\db\ActiveRecord
    /**
     * Get the debt amount for this debtor.
     * 
-    * @return The DebtAmount model.
+    * @return \yii\db\ActiveQuery DebtAmount model.
     */
     public function getDebtAmount()
     {

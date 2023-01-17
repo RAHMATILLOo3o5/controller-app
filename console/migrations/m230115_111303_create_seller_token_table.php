@@ -14,14 +14,14 @@ class m230115_111303_create_seller_token_table extends Migration
     {
         $this->createTable('{{%seller_token}}', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
+            'worker_id' => $this->integer()->notNull(),
             'token' => $this->string(255)->notNull(),
             'expired_at' => $this->dateTime()->notNull(),
         ]);
         $this->addForeignKey(
             'fk-token-worker_id',
-            'token',
-            'user_id',
+            'seller_token',
+            'worker_id',
             'worker',
             'id',
             'CASCADE'

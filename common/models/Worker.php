@@ -92,7 +92,7 @@ class Worker extends \yii\db\ActiveRecord implements IdentityInterface
     {
         $user = SellerToken::findOne(['token' => $token]);
 
-        return self::findOne(['id' => $user->user_id]);
+        return static::findOne(['id' => $user->worker_id, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**

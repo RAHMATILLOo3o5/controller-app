@@ -20,7 +20,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post(), '') && $model->login()) {
             $user = Worker::findByUsername($model->phone_number);
             $token = new SellerToken();
-            $token->user_id = $user->id;
+            $token->worker_id = $user->id;
             $token->token = Yii::$app->security->generateRandomString(46);
             $token->expired_at = date('Y-m-d H:i:s', time() + 3600);
             $token->save();

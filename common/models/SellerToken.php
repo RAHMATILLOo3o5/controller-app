@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "seller_token".
  *
  * @property int $id
- * @property int $user_id
+ * @property int $worker_id
  * @property string $token
  * @property string $expired_at
  */
@@ -28,11 +28,12 @@ class SellerToken extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'token', 'expired_at'], 'required'],
-            [['user_id'], 'default', 'value' => null],
-            [['user_id'], 'integer'],
+            [['worker_id', 'token', 'expired_at'], 'required'],
+            [['worker_id'], 'default', 'value' => null],
+            [['worker_id'], 'integer'],
             [['expired_at'], 'safe'],
             [['token'], 'string', 'max' => 255],
+            [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => Worker::class, 'targetAttribute' => ['worker_id' => 'id']],
         ];
     }
 
@@ -43,9 +44,15 @@ class SellerToken extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
+            'worker_id' => 'User ID',
             'token' => 'Token',
             'expired_at' => 'Expired At',
         ];
     }
+
+    public function getUser()
+    {
+        return $this->hasOne(Worker::class, ['id' => 'worker_id']);
+    }
+
 }
