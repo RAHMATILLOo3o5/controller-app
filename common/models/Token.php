@@ -4,6 +4,12 @@ namespace common\models;
 
 use yii\db\ActiveRecord;
 
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property string $token
+ * @property string $expired_at
+ */
 class Token extends ActiveRecord
 {
     public static function tableName()

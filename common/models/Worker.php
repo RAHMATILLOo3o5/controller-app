@@ -7,6 +7,7 @@ use yii\web\IdentityInterface;
 use yii\behaviors\TimestampBehavior;
 use Yii;
 use yii\base\NotSupportedException;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * This is the model class for table "worker".
@@ -38,12 +39,14 @@ class Worker extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return 'worker';
     }
+
     public function behaviors()
     {
         return [
             TimestampBehavior::class,
         ];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -91,8 +94,11 @@ class Worker extends \yii\db\ActiveRecord implements IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
         $user = SellerToken::findOne(['token' => $token]);
-
-        return static::findOne(['id' => $user->worker_id, 'status' => self::STATUS_ACTIVE]);
+        if (!empty($user) && $user->expired_at > !date('Y-m-d H:i:s', time())) {
+            return static::findOne(['id' => $user->worker_id, 'status' => self::STATUS_ACTIVE]);
+        } else {
+            throw new UnauthorizedHttpException("Sizning yuborgan token eskirgan yoki mavjud emas!");
+        }
     }
 
     /**
@@ -150,7 +156,7 @@ class Worker extends \yii\db\ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }

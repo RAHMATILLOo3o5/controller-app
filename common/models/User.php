@@ -7,6 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * User model
@@ -73,8 +74,11 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
         $user = Token::findOne(['token' => $token]);
-
-        return self::findOne(['id' => $user->user_id]);
+        if (!empty($user) && $user->expired_at >! date('Y-m-d H:i:s', time())) {
+            return self::findOne(['id' => $user->user_id]);
+        } else{
+            throw new UnauthorizedHttpException("Sizning yuborgan token eskirgan yoki mavjud emas!");
+        }
     }
 
     /**
@@ -132,7 +136,7 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
