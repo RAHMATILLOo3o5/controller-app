@@ -195,4 +195,12 @@ class Selling extends \yii\db\ActiveRecord
             return $r;
         }
     }
+
+    public function getAllMoney()
+    {
+        $r = self::find()->sum('sell_price');
+
+        return ($r != null) ? $r : 0;
+    }
+
 }
