@@ -16,14 +16,21 @@ return [
     'controllerNamespace' => 'console\controllers',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'controllerMap' => [
         'fixture' => [
             'class' => \yii\console\controllers\FixtureController::class,
             'namespace' => 'common\fixtures',
         ],
-        'report' => ReportCommand::class
+        'migrate' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => null,
+            'migrationNamespaces' => [
+                'yii\queue\db\migrations',
+            ],
+        ],
+        'report' => ReportCommand::class,
     ],
     'components' => [
         'log' => [
@@ -34,11 +41,7 @@ return [
                 ],
             ],
         ],
-        'queue' => [
-            'class' => \yii\queue\redis\Queue::class,
-            'redis' => 'redis',
-            'channel' => 'queue',
-        ],
+
     ],
     'params' => $params,
 ];

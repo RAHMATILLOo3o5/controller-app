@@ -54,4 +54,57 @@ class Statistics extends \yii\db\ActiveRecord
             'created_at' => 'Natija olingan vaqt',
         ];
     }
+
+    public function getTotalProfit()
+    {
+        $arr = [];
+
+        $r = self::find()->orderBy(['id' => SORT_DESC])->all();
+
+        foreach ($r as $k){
+            $arr[] = $k->total_benifit;
+        }
+
+        return json_encode($arr);
+
+    }
+
+    public function getPeriodData()
+    {
+        $arr = [];
+
+        $r = self::find()->orderBy(['id' => SORT_DESC])->all();
+
+        foreach ($r as $k){
+            $arr[] = date('m/d/Y', $k->created_at)." GTM";
+        }
+
+        return json_encode($arr);
+    }
+
+    public function getProBenefit()
+    {
+        $arr = [];
+
+        $r = self::find()->orderBy(['id' => SORT_DESC])->all();
+
+        foreach ($r as $k){
+            $arr[] = $k->benifit;
+        }
+
+        return json_encode($arr);
+    }
+
+    public function getTotalExpens()
+    {
+        $arr = [];
+
+        $r = self::find()->orderBy(['id' => SORT_DESC])->all();
+
+        foreach ($r as $k){
+            $arr[] = $k->total_spent;
+        }
+
+        return json_encode($arr);
+    }
 }
