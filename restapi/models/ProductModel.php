@@ -27,24 +27,8 @@ class ProductModel extends Product
             'max_sell_price_retail',
             'min_sell_price_good',
             'max_sell_price_good',
-            'type_of_currency' => function ($model) {
-                if ($model->type_of_currency == $model::USD) {
-                    return "AQSH dollari";
-                } elseif ($model->type_of_currency == $model::EURO) {
-                    return "Yevro";
-                } elseif ($model->type_of_currency == $model::RUB) {
-                    return "RUBL";
-                } else {
-                    return "SUM";
-                }
-            },
-            'status' => function($model){
-                if($model->status == self::STATUS_ACTIVE){
-                    return "FAOL";
-                } elseif($model->status == self::STATUS_INACTIVE){
-                    return "NOFAOL";
-                } return "O'CHIRILGAN";
-            },
+            'type_of_currency',
+            'status',
             'created_at'
         ];
     }
