@@ -27,7 +27,10 @@ class ProductController extends BaseController
     {
         $status = Yii::$app->request->get('status', 10);
         $data = new ActiveDataProvider([
-            'query' => ProductModel::find()->where(['status' => $status])
+            'query' => ProductModel::find()->where(['status' => $status]),
+            'pagination' => [
+                'pageSize' => 20
+            ]
         ]);
 
         return $data;
