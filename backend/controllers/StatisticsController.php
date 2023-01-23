@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Statistics;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -20,9 +21,9 @@ class StatisticsController extends BaseController
      */
     public function actionIndex()
     {
+        $period = Yii::$app->request->get('period');
         $dataProvider = new ActiveDataProvider([
-            'query' => Statistics::find(),
-
+            'query' => Statistics::find()->where(['>=', 'period', date('Y-m-d H:i', strtotime("-{$period} days"))]),
             'pagination' => [
                 'pageSize' => 50
             ],
