@@ -31,7 +31,6 @@ class StatisticsController extends BaseController
                     'id' => SORT_DESC,
                 ]
             ],
-
         ]);
         $model = new Statistics();
         return $this->render('index', [

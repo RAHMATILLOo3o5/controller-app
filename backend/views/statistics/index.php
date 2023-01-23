@@ -4,6 +4,7 @@ use common\models\Statistics;
 use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -19,32 +20,52 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card shadow">
                     <div class="card-header">
                         <div class="d-flex justify-content-sm-between flex-wrap">
-                            <a href="#" class="btn btn-outline-secondary m-1 m-md-0">Hammasi</a>
-                            <a href="#" class="btn btn-outline-secondary m-1 m-md-0">Oxirgi 30 kunlik</a>
-                            <a href="#" class="btn btn-outline-secondary m-1 m-md-0">Oxirgi 15 kunlik</a>
-                            <a href="#" class="btn btn-outline-secondary m-1 m-md-0">Oxirgi 10 kunlik</a>
-                            <a href="#" class="btn btn-outline-secondary m-1 m-md-0">Oxirgi 7 kunlik</a>
+                            <a href="<?= Url::to(['statistics/index']) ?>" class="btn btn-outline-secondary m-1 m-md-0">Hammasi</a>
+                            <a href="<?= Url::to(['statistics/index', 'period' => 30]) ?>" class="btn btn-outline-secondary m-1 m-md-0">Oxirgi 30 kunlik</a>
+                            <a href="<?= Url::to(['statistics/index', 'period' => 15]) ?>" class="btn btn-outline-secondary m-1 m-md-0">Oxirgi 15 kunlik</a>
+                            <a href="<?= Url::to(['statistics/index', 'period' => 10]) ?>" class="btn btn-outline-secondary m-1 m-md-0">Oxirgi 10 kunlik</a>
+                            <a href="<?= Url::to(['statistics/index', 'period' => 7]) ?>" class="btn btn-outline-secondary m-1 m-md-0">Oxirgi 7 kunlik</a>
                         </div>
                     </div>
                     <div class="card-body">
-                        <?= GridView::widget([
-                            'dataProvider' => $dataProvider,
+                        <div class="table-responsive">
+                            <?= GridView::widget([
+                                'dataProvider' => $dataProvider,
 
-                            'columns' => [
-                                ['class' => 'yii\grid\SerialColumn'],
-
-                                'id',
-                                'period',
-                                'total_benifit',
-                                'total_spent',
-                                'benifit',
-                                'differrents',
-                                'created_at:date',
-                            ],
-                            'pager' => [
-                                'class' => LinkPager::class
-                            ]
-                        ]); ?>
+                                'columns' => [
+                                    ['class' => 'yii\grid\SerialColumn'],
+                                    'period',
+                                    [
+                                        'attribute' => 'total_benifit',
+                                        'value' => function (Statistics $model) {
+                                            return number_format($model->total_benifit, 1, '.', ' ');
+                                        }
+                                    ],
+                                    [
+                                        'attribute' => 'total_spent',
+                                        'value' => function (Statistics $model) {
+                                            return number_format($model->total_spent, 1, '.', ' ');
+                                        }
+                                    ],
+                                    [
+                                        'attribute' => 'benifit',
+                                        'value' => function (Statistics $model) {
+                                            return number_format($model->benifit, 1, '.', ' ');
+                                        }
+                                    ],
+                                    [
+                                        'attribute' => 'differrents',
+                                        'value' => function (Statistics $model) {
+                                            return number_format($model->differrents, 1, '.', ' ');
+                                        }
+                                    ],
+                                    'created_at:date',
+                                ],
+                                'pager' => [
+                                    'class' => LinkPager::class
+                                ]
+                            ]); ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -53,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-md-12 mb-4">
                 <div class="card shadow">
                     <div class="card-header">
-                        <strong class="card-title mb-0">Line Chart</strong>
+                        <strong class="card-title mb-0">Umumiy holat</strong>
                     </div>
                     <div class="card-body">
                         <div id="stat"></div>
@@ -71,15 +92,15 @@ $js = '
     series: [
       {
         name: "Sof foyda",
-        data: '. $model->proBenefit .',
+        data: ' . $model->proBenefit . ',
       },
       {
         name: "Umumiy foyda",
-        data: '. $model->totalProfit .',
+        data: ' . $model->totalProfit . ',
       },
       {
         name: "Xarajatlar",
-        data: '. $model->totalExpens .',
+        data: ' . $model->totalExpens . ',
       },
     ],
     chart: {
@@ -125,7 +146,7 @@ $js = '
     },
     xaxis: {
       type: "datetime",
-      categories: '. $model->periodData .',
+      categories: ' . $model->periodData . ',
       labels: {
         show: !0,
         trim: !1,
@@ -189,7 +210,7 @@ $js = '
   lineChartCtn = document.querySelector("#stat");
 lineChartCtn &&
   (lineChart = new ApexCharts(lineChartCtn, lineChartoptions)).render();
-   console.log('. $model->periodData .')
+   console.log(' . $model->periodData . ')
 ';
 
 $this->registerJs($js);
