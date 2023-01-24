@@ -52,6 +52,9 @@ class ProductQuery extends ProductBackendModel
                 'defaultOrder' => [
                     'id' => SORT_DESC
                 ]
+            ],
+            'pagination' => [
+                'pageSize' => 20
             ]
         ]);
 
