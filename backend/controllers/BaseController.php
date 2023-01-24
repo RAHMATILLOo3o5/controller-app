@@ -19,7 +19,7 @@ class BaseController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['login', 'signup'],
+                        'actions' => ['login', 'signup', 'stat-create'],
                         'allow' => true,
                     ],
                     [

@@ -41,7 +41,7 @@ class StatisticsController extends BaseController
         ]);
     }
 
-    public function actionCreate()
+    public function actionStatCreate()
     {
         $report = new Statistics();
         if($report->saveDataToDB()){
