@@ -125,7 +125,7 @@ class Statistics extends \yii\db\ActiveRecord
         $data['total_benifit'] = $profit->allMoney;
         $data['benifit'] = $data['total_benifit'] - $data['total_spent'];
         $diff = Statistics::find()->orderBy('id', SORT_DESC)->one();
-        if ($diff == 0) {
+        if ($diff == null) {
             $data['differrents'] = 0;
         } else {
             $diff = Statistics::find()->orderBy('id', SORT_DESC)->one();
