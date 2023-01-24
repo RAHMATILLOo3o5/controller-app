@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Statistics;
+use console\controllers\ReportCommand;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -38,5 +39,15 @@ class StatisticsController extends BaseController
             'dataProvider' => $dataProvider,
             'model' => $model
         ]);
+    }
+
+    public function actionCreate()
+    {
+        $report = new Statistics();
+        if($report->saveDataToDB()){
+            return true;
+        } else{
+            return false;
+        }
     }
 }

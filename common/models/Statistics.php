@@ -61,7 +61,7 @@ class Statistics extends \yii\db\ActiveRecord
 
         $r = self::find()->orderBy(['id' => SORT_DESC])->all();
 
-        foreach ($r as $k){
+        foreach ($r as $k) {
             $arr[] = $k->total_benifit;
         }
 
@@ -75,8 +75,8 @@ class Statistics extends \yii\db\ActiveRecord
 
         $r = self::find()->orderBy(['id' => SORT_DESC])->all();
 
-        foreach ($r as $k){
-            $arr[] = date('m/d/Y', $k->created_at)." GTM";
+        foreach ($r as $k) {
+            $arr[] = date('m/d/Y', $k->created_at) . " GTM";
         }
 
         return json_encode($arr);
@@ -88,7 +88,7 @@ class Statistics extends \yii\db\ActiveRecord
 
         $r = self::find()->orderBy(['id' => SORT_DESC])->all();
 
-        foreach ($r as $k){
+        foreach ($r as $k) {
             $arr[] = $k->benifit;
         }
 
@@ -101,10 +101,37 @@ class Statistics extends \yii\db\ActiveRecord
 
         $r = self::find()->orderBy(['id' => SORT_DESC])->all();
 
-        foreach ($r as $k){
+        foreach ($r as $k) {
             $arr[] = $k->total_spent;
         }
 
         return json_encode($arr);
+    }
+
+    public function saveDataToDB()
+    {
+        $ledgerData = $this->calculateData();
+        return Yii::$app->db->createCommand()->batchInsert('statistics', ['period', 'total_spent', 'total_benifit', 'benifit', 'differrents', 'created_at'], [$ledgerData])->execute();
+    }
+
+    public function calculateData()
+    {
+        $productSpent = new Product();
+        $otherSpent = new OtherSpent();
+        $profit = new Selling();
+        $diff = Statistics::find()->count();
+        $data['period'] = date("Y-m-d H:i");
+        $data['total_spent'] = $otherSpent->allSumm + $productSpent->allMoney;
+        $data['total_benifit'] = $profit->allMoney;
+        $data['benifit'] = $data['total_benifit'] - $data['total_spent'];
+        $diff = Statistics::find()->orderBy('id', SORT_DESC)->one();
+        if ($diff === 0) {
+            $data['differrents'] = 0;
+        } else {
+            $diff = Statistics::find()->orderBy('id', SORT_DESC)->one();
+            $data['differrents'] = $diff->benifit - $data['benifit'];
+        }
+        $data['created_at'] = time();
+        return $data;
     }
 }
