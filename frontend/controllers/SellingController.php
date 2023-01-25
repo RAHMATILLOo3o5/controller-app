@@ -46,6 +46,7 @@ class SellingController extends \yii\web\Controller
 
             return $res;
         }
+
         return $this->render('index', [
             'model' => $model,
         ]);
