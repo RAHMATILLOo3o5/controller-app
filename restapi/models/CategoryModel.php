@@ -11,9 +11,7 @@ class CategoryModel extends ProductCategory
         return [
             'id',
             'category_name', 
-            'unit' => function($model){
-                return ($model->unit == 0) ? "KG" : "DONA";
-            },
+            'unit',
             'created_at'
         ];
     }
