@@ -155,7 +155,7 @@ class Backlog extends \yii\db\ActiveRecord
         return $this->getBacklogAmount() - $this->getDebtAmount();
     }
 
-    public function saved()
+    public function saved(): bool
     {
         $debtor = DebtAmount::findOne(['debtor_id' => $this->debtor_id]);
         if (!empty($debtor)) {

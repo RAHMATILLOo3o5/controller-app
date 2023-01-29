@@ -2,10 +2,12 @@
 
 namespace restapi\modules\seller\controllers;
 
+use common\models\Backlog;
 use common\models\Selling;
 use restapi\controllers\BaseController;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\web\HttpException;
 use yii\web\MethodNotAllowedHttpException;
 
 class SellingController extends BaseController
@@ -19,6 +21,26 @@ class SellingController extends BaseController
         $actions['index']['prepareDataProvider'] = [$this, 'data'];
 
         return $actions;
+    }
+
+    public function actionSellingDebt()
+    {
+        $model = new Selling();
+
+        $backlog = new Backlog();
+        if ($backlog->load(Yii::$app->request->post()) && $model->load(Yii::$app->request->post())) {
+            $model->type_pay = Selling::PAY_DEBT;
+            $model->save();
+            $backlog->selling_id = $model->id;
+            if ($backlog->save()) {
+                return $backlog->saved();
+            } else {
+                return [
+                    $backlog->errors,
+                    $model->errors
+                ];
+            }
+        }
     }
 
     public function data()
