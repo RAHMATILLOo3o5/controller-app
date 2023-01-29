@@ -24,8 +24,6 @@ class SellingController extends \yii\web\Controller
             $backlog->selling_id = $model->id;
             if ($backlog->save()) {
                 $backlog->saved();
-                VarDumper::dump($backlog, 10, true);
-                return  false;
                 return $this->redirect(Yii::$app->request->referrer);
             } else {
                 throw new HttpException('500', 'Serverning ichki xatosi qaytadan urinib ko\'ring');
