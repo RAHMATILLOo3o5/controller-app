@@ -16,9 +16,7 @@ class DebtorModel extends Debtor
             'status',
             'created_at',
             'updated_at',
-            'author_id' => function (Debtor $model){
-                return $model->author;
-            },
+            'author_id',
         ];
     }
 
