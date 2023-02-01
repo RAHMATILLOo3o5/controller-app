@@ -7,7 +7,6 @@ use common\models\Selling;
 use restapi\controllers\BaseController;
 use Yii;
 use yii\data\ActiveDataProvider;
-use yii\web\HttpException;
 use yii\web\MethodNotAllowedHttpException;
 
 class SellingController extends BaseController
