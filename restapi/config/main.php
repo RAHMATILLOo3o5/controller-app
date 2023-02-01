@@ -14,6 +14,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'restapi\controllers',
     'bootstrap' => ['log'],
+    'language' => 'uz',
     'modules' => [
         'seller' => [
             'class' => 'restapi\modules\seller\Seller',

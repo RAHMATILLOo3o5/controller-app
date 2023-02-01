@@ -18,6 +18,7 @@ class SellingController extends \yii\web\Controller
         $model = new Selling();
 
         $backlog = new Backlog();
+        
         if ($backlog->load(Yii::$app->request->post()) && $model->load(Yii::$app->request->post())) {
             $model->type_pay = Selling::PAY_DEBT;
             $model->save();
