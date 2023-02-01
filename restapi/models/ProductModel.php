@@ -29,7 +29,10 @@ class ProductModel extends Product
             'max_sell_price_good',
             'type_of_currency',
             'status',
-            'created_at'
+            'created_at',
+            'category_id' => function(){
+                return $this->category;
+            }
         ];
     }
 
