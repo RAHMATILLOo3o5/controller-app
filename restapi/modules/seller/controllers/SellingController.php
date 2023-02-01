@@ -28,7 +28,7 @@ class SellingController extends BaseController
         $model = new SellingDebt();
         if (Yii::$app->request->isPost) {
             if($model->load($this->request->post(), '') && $model->validate()){
-                return $model;
+                return $model->saved();
             } else{
                 return $model->errors;
             }
