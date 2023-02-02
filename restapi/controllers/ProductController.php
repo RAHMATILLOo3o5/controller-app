@@ -55,9 +55,9 @@ class ProductController extends BaseController
         $model = $this->findMOdel($id);
 
         if (Yii::$app->request->isPut || Yii::$app->request->isPatch) {
-            if ($model->load(Yii::$app->request->post(), '')) {
+            if ($model->load(Yii::$app->request->bodyParams, '')) {
                 $model->converd_currency = $model->setConverdCurrency($model->product_purchase_price, $model->currency_price);
-                return ($model->save()) ? $model : null;
+                return $model->save();
             }
         } else {
             return $model->errors;
