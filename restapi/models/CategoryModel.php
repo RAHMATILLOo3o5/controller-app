@@ -18,7 +18,7 @@ class CategoryModel extends ProductCategory
 
     public function extraFields()
     {
-        return [
+        return [    
             'products' => 'product'
         ];
     }
