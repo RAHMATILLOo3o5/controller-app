@@ -58,7 +58,7 @@ return [
                 '/seller/auth' => 'seller/',
                 [
                     'class' => \yii\rest\UrlRule::class,
-                    'controller' => ['user', 'product', 'category', 'worker', 'other-spent', 'statistics', 'debtor'],
+                    'controller' => ['user', 'product', 'category', 'worker', 'other-spent', 'statistics', 'debtor', 'seller-product'],
                     'pluralize' => false
                 ],
             ],
