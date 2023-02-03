@@ -2,15 +2,14 @@
 
 namespace restapi\modules\seller\controllers;
 
-use restapi\controllers\ProductController;
-use restapi\models\ProductModel;
-use Yii;
-use yii\data\ActiveDataProvider;
+use restapi\controllers\CategoryController;
+use restapi\models\CategoryModel;
 use yii\rest\Serializer;
-class SellerProductController extends ProductController
-{
-    public $modelClass = ProductModel::class;
+use yii\data\ActiveDataProvider;
 
+
+class SellerProductCategoryController extends CategoryController
+{
     public $serializer = [
         'class' => Serializer::class,
     ];
@@ -28,7 +27,7 @@ class SellerProductController extends ProductController
     public function dataProvider()
     {
         $data = new ActiveDataProvider([
-            'query' => ProductModel::find(),
+            'query' => CategoryModel::find(),
             'pagination' => false
         ]);
 
