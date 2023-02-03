@@ -23,4 +23,9 @@ class CategoryModel extends ProductCategory
         ];
     }
 
+    public function getUnitProduct()
+    {
+        
+    }
+
 }

@@ -1,6 +1,5 @@
 <?php
 
-use yii\web\MultipartFormDataParser;
 
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
@@ -20,7 +19,7 @@ return [
             'class' => 'restapi\modules\seller\Seller',
         ]
     ],
-    'defaultRoute' => 'user',
+    'defaultRoute' => '/home',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-restapi',
@@ -58,7 +57,7 @@ return [
                 '/seller/auth' => 'seller/',
                 [
                     'class' => \yii\rest\UrlRule::class,
-                    'controller' => ['user', 'product', 'category', 'worker', 'other-spent', 'statistics', 'debtor', 'seller-product'],
+                    'controller' => ['user', 'home', 'product', 'category', 'worker', 'other-spent', 'statistics', 'debtor', 'seller-product'],
                     'pluralize' => false
                 ],
             ],
