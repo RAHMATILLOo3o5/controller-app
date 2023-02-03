@@ -3,6 +3,7 @@
 namespace restapi\models;
 
 use common\models\Product;
+use common\models\Selling;
 use restapi\models\CategoryModel;
 
 class ProductModel extends Product
@@ -39,7 +40,12 @@ class ProductModel extends Product
     public function extraFields()
     {
         return [
-            'category'
+            'selling'
         ];
+    }
+
+    public function getSelling()
+    {
+        return $this->hasMany(Selling::class, ['id' => 'product_id']);
     }
 }
