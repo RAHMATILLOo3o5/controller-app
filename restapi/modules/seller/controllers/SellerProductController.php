@@ -21,14 +21,14 @@ class SellerProductController extends ProductController
 
         unset($action['create']);
         unset($action['update']);
-        $action['index']['prepareDataProvider'] = [$this, 'dataProvider'];
+        unset($action['index']);
         return $action;
     }
 
-    public function dataProvider()
+    public function actionIndex($category_id)
     {
         $data = new ActiveDataProvider([
-            'query' => ProductModel::find(),
+            'query' => ProductModel::find()->where(['category_id' => $category_id, 'status' => ProductModel::STATUS_ACTIVE]),
             'pagination' => false
         ]);
 
