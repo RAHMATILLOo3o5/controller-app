@@ -7,6 +7,7 @@ use restapi\models\ProductModel;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\rest\Serializer;
+
 class SellerProductController extends ProductController
 {
     public $modelClass = ProductModel::class;
@@ -25,12 +26,21 @@ class SellerProductController extends ProductController
         return $action;
     }
 
-    public function actionIndex($category_id)
+    public function actionIndex()
     {
-        $data = new ActiveDataProvider([
-            'query' => ProductModel::find()->where(['category_id' => $category_id, 'status' => ProductModel::STATUS_ACTIVE]),
-            'pagination' => false
-        ]);
+        $category_id = Yii::$app->request->get('category_id');
+        if (!$category_id) {
+            $data = new ActiveDataProvider([
+                'query' => ProductModel::find()->andWhere(['status' => ProductModel::STATUS_ACTIVE]),
+                'pagination' => false
+            ]);
+        }else{
+            $data = new ActiveDataProvider([
+                'query' => ProductModel::find()->andWhere(['status' => ProductModel::STATUS_ACTIVE])->andWhere(['category_id' => $category_id]),
+                'pagination' => false
+            ]);
+        }
+
 
         return $data;
     }
