@@ -46,6 +46,6 @@ class ProductModel extends Product
 
     public function getSelling()
     {
-        return $this->hasMany(Selling::class, ['id' => 'product_id']);
+        return $this->hasMany(Selling::class, ['product_id' => 'id']);
     }
 }
