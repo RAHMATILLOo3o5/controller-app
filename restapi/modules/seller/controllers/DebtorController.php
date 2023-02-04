@@ -2,12 +2,12 @@
 
 namespace restapi\modules\seller\controllers;
 
+use common\models\Backlog;
 use common\models\DebtAmount;
-use common\models\Debtor;
 use restapi\controllers\BaseController;
 use restapi\modules\seller\models\DebtorModel;
 use yii\web\MethodNotAllowedHttpException;
-
+use yii\web\NotFoundHttpException;
 
 class DebtorController extends BaseController
 {
@@ -17,6 +17,7 @@ class DebtorController extends BaseController
     {
         $actions = parent::actions();
         unset($actions['create']);
+        unset($actions['view']);
         return $actions;
     }
 
@@ -34,12 +35,27 @@ class DebtorController extends BaseController
                 $debt->pay_debt = 0;
                 $debt->save();
                 return $model;
-            } else{
+            } else {
                 return $model->errors;
             }
         } else {
             throw new MethodNotAllowedHttpException("Method Not Allowed. This URL can only handle the following request methods: POST.");
         }
+    }
 
+    public function actionView($id)
+    {
+        if ($id != null) {
+            $model = DebtorModel::findOne($id);
+            $debt = DebtAmount::findOne(['debtor_id' => $id]);
+            $debt_list = Backlog::findAll(['debtor_id' => $id]);
+            return [
+                'debtor' => $model,
+                'debt_amount' => $debt,
+                'debt_list' => $debt_list
+            ];
+        } else{
+            throw new NotFoundHttpException("Ma'lumot topilmadi!");
+        }
     }
 }

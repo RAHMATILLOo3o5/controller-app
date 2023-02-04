@@ -7,9 +7,19 @@ use yii\rest\Controller;
 use common\models\Statistics;
 use restapi\models\CategoryModel;
 use restapi\models\ProductModel;
+use yii\filters\auth\HttpBearerAuth;
 
 class HomeController extends Controller
 {
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+
+        $behaviors['authenticator'] = [
+            'class' => HttpBearerAuth::class,
+        ];
+        return $behaviors;
+    }
 
     public function actionIndex()
     {
