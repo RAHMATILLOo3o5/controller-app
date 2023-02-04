@@ -84,8 +84,6 @@ class DebtAmount extends \yii\db\ActiveRecord
 
     public function getRemainingDebt()
     {
-
         return $this->all_debt_amount - $this->pay_debt;
-
     }
 }
