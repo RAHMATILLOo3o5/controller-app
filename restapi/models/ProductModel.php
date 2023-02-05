@@ -2,11 +2,11 @@
 
 namespace restapi\models;
 
-use common\models\Product;
+use backend\models\ProductBackendModel;
 use common\models\Selling;
 use restapi\models\CategoryModel;
 
-class ProductModel extends Product
+class ProductModel extends ProductBackendModel
 {
 
     public function getCategory()
