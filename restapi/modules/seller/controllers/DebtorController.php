@@ -66,13 +66,7 @@ class DebtorController extends BaseController
         $model = new PayDebt();
         $debtor = DebtorModel::findOne($debtor_id);
         if (Yii::$app->request->isPost && $model->load($this->request->post(), '')) {
-
-            // if ($model->remainingDebt == 0) {
-            //     $debtor->status = DebtorModel::INACTIVE;
-            //     $debtor->save();
-            // }
-
-            return $model;
+            return $model->saved($debtor_id);
         } else {
             throw new MethodNotAllowedHttpException("Method Not Allowed. This URL can only handle the following request methods: POST.");
         }
