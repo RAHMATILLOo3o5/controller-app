@@ -19,6 +19,7 @@ class ProductController extends BaseController
 
         unset($action['create']);
         unset($action['update']);
+        unset($action['view']);
         $action['index']['prepareDataProvider'] = [$this, 'dataProvider'];
         return $action;
     }
@@ -69,6 +70,11 @@ class ProductController extends BaseController
         $model = $this->findModel($id);
         $model->status = 0;
         return $model->save();
+    }
+
+    public function actionView($id)
+    {
+        
     }
 
     public function findMOdel($id)
