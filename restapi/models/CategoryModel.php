@@ -12,7 +12,7 @@ class CategoryModel extends ProductCategory
             'id',
             'category_name', 
             'unit',
-            'created_at'
+            'created_at',
         ];
     }
 

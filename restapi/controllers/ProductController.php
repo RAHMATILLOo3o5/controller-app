@@ -91,6 +91,12 @@ class ProductController extends BaseController
         ];
     }
 
+    public function actionList($category_id){
+        $product = ProductModel::findAll(['category_id' => $category_id]);
+
+        return $product;
+    }
+
     public function findMOdel($id)
     {
         if ($id != null) {

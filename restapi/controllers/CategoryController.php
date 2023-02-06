@@ -5,7 +5,7 @@ namespace restapi\controllers;
 use restapi\models\CategoryModel;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-
+use Yii;
 
 class CategoryController extends BaseController
 {
@@ -16,6 +16,7 @@ class CategoryController extends BaseController
         $action = parent::actions();
 
         unset($action['delete']);
+        // unset($action['view']);
         $action['index']['prepareDataProvider'] = [$this, 'dataProvider'];
         return $action;
     }
@@ -39,6 +40,9 @@ class CategoryController extends BaseController
         $model->status = 0;
         return $model->save();
     }
+
+
+
 
     protected function findModel($id)
     {
