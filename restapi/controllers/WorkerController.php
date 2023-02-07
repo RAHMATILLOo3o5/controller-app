@@ -3,6 +3,7 @@
 namespace restapi\controllers;
 
 use common\models\Worker;
+use restapi\models\SellingModel;
 use restapi\models\WorkerModel;
 use Yii;
 use yii\web\MethodNotAllowedHttpException;
@@ -73,7 +74,8 @@ class WorkerController extends BaseController
             'worker_info' => $worker,
             'worker_stats' => [
                 ''
-            ]
+            ],
+            'selling_list' => SellingModel::find()->where(['worker_id' => $id])->orderBy(['id' => SORT_DESC])->all()
         ];
     }
 
