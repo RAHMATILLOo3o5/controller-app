@@ -4,6 +4,7 @@ namespace restapi\controllers;
 
 use common\models\Selling;
 use restapi\models\SellingModel;
+use Yii;
 use yii\data\ActiveDataProvider;
 
 class SellingController extends BaseController
@@ -20,12 +21,23 @@ class SellingController extends BaseController
     }
 
 
-    public function actionList($worker_id)
+    public function actionList()
     {
-        
-        $selling = SellingModel::find()->where(['worker_id' => $worker_id])->all();
+        $params = Yii::$app->request->get();
+        $selling = SellingModel::find();
+        if (isset($params['worker_id']) && isset($params['product_id'])) {
 
-        return $selling;
+            $selling->where(['worker_id' => $params['worker_id'], 'product_id' => $params['product_id']]);
+
+        } else if (isset($params['worker_id'])) {
+
+            $selling->where(['worker_id' => $params['worker_id']]);
+
+        } else if (isset($params['product_id'])) {
+
+            $selling->where(['product_id' => $params['product_id']]);
+
+        } 
+        return $selling->orderBy(['id' => SORT_DESC])->all();
     }
-
 }

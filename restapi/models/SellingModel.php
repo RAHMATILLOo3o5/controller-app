@@ -11,12 +11,16 @@ class SellingModel extends Selling
         return [
             'id',
             'sell_price',
+            'product_id',
             'sell_amount', 
             'type_sell', 
             'type_pay', 
             'created_at',
             'worker_id' => function () {
                 return $this->worker;
+            },
+            'category_id' => function(){
+                return CategoryModel::findOne($this->category_id);
             },
         ];
     }
