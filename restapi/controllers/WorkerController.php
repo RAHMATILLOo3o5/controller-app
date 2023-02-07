@@ -18,6 +18,7 @@ class WorkerController extends BaseController
         unset($action['create']);
         unset($action['update']);
         unset($action['delete']);
+        unset($action['view']);
         return $action;
     }
 
@@ -54,7 +55,6 @@ class WorkerController extends BaseController
         } else {
             throw new MethodNotAllowedHttpException("Method Not Allowed. This URL can only handle the following request methods: POST.");
         }
-
     }
 
     public function actionDelete($id)
@@ -65,6 +65,18 @@ class WorkerController extends BaseController
         return $worker->save();
     }
 
+    public function actionView($id)
+    {
+        $worker = $this->findModel($id);
+
+        return [
+            'worker_info' => $worker,
+            'worker_stats' => [
+                ''
+            ]
+        ];
+    }
+
     protected function findModel($id)
     {
         if (($model = WorkerModel::findOne(['id' => $id])) !== null) {
@@ -73,5 +85,4 @@ class WorkerController extends BaseController
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
 }
