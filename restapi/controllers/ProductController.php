@@ -5,6 +5,7 @@ namespace restapi\controllers;
 use common\models\Selling;
 use yii\web\NotFoundHttpException;
 use restapi\models\ProductModel;
+use restapi\models\SellingModel;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -87,11 +88,12 @@ class ProductController extends BaseController
                 'remaining_summ' => $product->aboutSumm
             ],
             'product_info' => $product,
-            'selling_list' => Selling::find()->where(['product_id' => $id])->orderBy(['id' => SORT_DESC])->all()
+            'selling_list' => SellingModel::find()->where(['product_id' => $id])->orderBy(['id' => SORT_DESC])->all()
         ];
     }
 
-    public function actionList($category_id){
+    public function actionList($category_id)
+    {
         $product = ProductModel::findAll(['category_id' => $category_id]);
 
         return $product;
