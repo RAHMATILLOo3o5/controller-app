@@ -2,7 +2,6 @@
 
 namespace restapi\controllers;
 
-use common\models\Selling;
 use yii\web\NotFoundHttpException;
 use restapi\models\ProductModel;
 use restapi\models\SellingModel;

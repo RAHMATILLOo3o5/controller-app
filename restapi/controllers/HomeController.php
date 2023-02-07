@@ -7,6 +7,7 @@ use yii\rest\Controller;
 use common\models\Statistics;
 use restapi\models\CategoryModel;
 use restapi\models\ProductModel;
+use restapi\models\SellingModel;
 use yii\filters\auth\HttpBearerAuth;
 
 class HomeController extends Controller
@@ -25,7 +26,7 @@ class HomeController extends Controller
     {
         $data = [];
         $product_query = ProductModel::find()->innerJoinWith('category');
-        $selling_query = Selling::find()->innerJoinWith('category');
+        $selling_query = SellingModel::find()->innerJoinWith('category');
         $data['product_amount'] = [
             'unit_kg' => $product_query->where(['product_category.unit' => CategoryModel::UNIT_KG])->sum('all_amount') ?? 0,
             'unit_each' => $product_query->where(['product_category.unit' => CategoryModel::UNIT_EACH])->sum('all_amount') ?? 0
