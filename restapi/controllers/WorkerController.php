@@ -73,9 +73,11 @@ class WorkerController extends BaseController
         return [
             'worker_info' => $worker,
             'worker_stats' => [
-                ''
-            ],
-            'selling_list' => SellingModel::find()->where(['worker_id' => $id])->orderBy(['id' => SORT_DESC])->all()
+                'selling_cash_amount' => $worker->cashProductAmount,
+                'selling_debt_amount' => $worker->debtProductAmount,
+                'selling_online_amount' => $worker->onlineProductAmount,
+                'selling_summ' => $worker->allSum
+            ]
         ];
     }
 
