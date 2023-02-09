@@ -19,7 +19,7 @@ class DebtorController extends BaseController
     public function actions(): array
     {
         $actions = parent::actions();
-        unset($actions['create']);
+        unset($actions['create'], $actions['view']);
         return $actions;
     }
 
