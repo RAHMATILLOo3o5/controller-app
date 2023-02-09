@@ -3,6 +3,7 @@
 namespace restapi\modules\seller\models;
 
 use common\models\Debtor;
+use restapi\models\WorkerModel;
 
 class DebtorModel extends Debtor
 {
@@ -16,7 +17,19 @@ class DebtorModel extends Debtor
             'status',
             'created_at',
             'updated_at',
-            'author_id',
+            'author_id' => function(){
+                return $this->worker;
+            },
+        ];
+    }
+
+    public function getWorker()
+    {
+        $worker = WorkerModel::findOne($this->author_id);
+
+        return [
+            'id' => $worker->id,
+            'full_name' => $worker->full_name
         ];
     }
 
