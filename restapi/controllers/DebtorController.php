@@ -5,6 +5,7 @@ namespace restapi\controllers;
 use common\models\Backlog;
 use common\models\DebtAmount;
 use restapi\controllers\BaseController;
+use restapi\models\BacklogModel;
 use restapi\modules\seller\models\DebtorModel;
 use restapi\modules\seller\models\PayDebt;
 use Yii;
@@ -28,7 +29,7 @@ class DebtorController extends BaseController
         if ($id != null) {
             $model = DebtorModel::findOne($id);
             $debt = DebtAmount::findOne(['debtor_id' => $id]);
-            $debt_list = Backlog::findAll(['debtor_id' => $id]);
+            $debt_list = BacklogModel::findAll(['debtor_id' => $id]);
             return [
                 'debtor' => $model,
                 'debt_amount' => $debt,
