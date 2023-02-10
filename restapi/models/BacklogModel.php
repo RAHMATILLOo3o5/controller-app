@@ -11,10 +11,21 @@ class BacklogModel extends Backlog
     {
         return [
             'selling_id' => function () {
-                return SellingModel::findOne($this->selling_id);
+                return $this->sellingProduct;
             },
             'backlog_amount',
             'created_at'
+        ];
+    }
+
+    public function getSellingProduct()
+    {
+        $selling = $this->selling;
+
+        return [
+            'product_name' => $selling->product->product_name,
+            'amount' => $selling->sell_amount,
+            'price' => $selling->sell_price
         ];
     }
 }
