@@ -36,11 +36,12 @@ class HomeController extends Controller
             'unit_kg' => $selling_query->where(['product_category.unit' => CategoryModel::UNIT_KG])->sum('sell_amount') ?? 0,
             'unit_each' => $selling_query->where(['product_category.unit' => CategoryModel::UNIT_EACH])->sum('sell_amount') ?? 0
         ];
-        $data['currency_value'] = [
-            'usd' => GetCurrency::getData(date('Y-m-d')),
-            'eu' => GetCurrency::getData(date('Y-m-d'), 'EUR'),
-            'rub' => GetCurrency::getData(date('Y-m-d'), 'RUB')
+        $currency = [
+            GetCurrency::getData(date('Y-m-d')),
+            GetCurrency::getData(date('Y-m-d'), 'EUR'),
+            GetCurrency::getData(date('Y-m-d'), 'RUB')
         ];
+        $data['currency_value'] = $currency;
         $data['last_month_stat'] = Statistics::find()->where(['>=', 'period', date('Y-m-d H:i', strtotime("-30 days"))])->all();
 
         return $data;
