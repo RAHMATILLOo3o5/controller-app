@@ -5,7 +5,6 @@ namespace restapi\controllers;
 use restapi\models\CategoryModel;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use Yii;
 
 class CategoryController extends BaseController
 {

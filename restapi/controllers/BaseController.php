@@ -2,7 +2,6 @@
 
 namespace restapi\controllers;
 
-use common\models\User;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\Cors;
 use yii\rest\ActiveController;

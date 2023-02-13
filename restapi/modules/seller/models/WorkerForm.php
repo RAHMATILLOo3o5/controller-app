@@ -4,7 +4,6 @@ namespace restapi\modules\seller\models;
 
 use common\models\Worker;
 use yii\base\Model;
-use Yii;
 
 class WorkerForm extends Model
 {

@@ -3,7 +3,6 @@
 namespace restapi\controllers;
 
 use common\models\Worker;
-use restapi\models\SellingModel;
 use restapi\models\WorkerModel;
 use Yii;
 use yii\web\MethodNotAllowedHttpException;

@@ -2,10 +2,8 @@
 
 namespace restapi\controllers;
 
-use common\models\Selling;
 use restapi\models\SellingModel;
 use Yii;
-use yii\data\ActiveDataProvider;
 
 class SellingController extends BaseController
 {

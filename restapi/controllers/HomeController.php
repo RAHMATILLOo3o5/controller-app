@@ -2,7 +2,6 @@
 
 namespace restapi\controllers;
 
-use common\models\Selling;
 use yii\rest\Controller;
 use common\models\Statistics;
 use component\GetCurrency;

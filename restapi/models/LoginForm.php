@@ -2,7 +2,6 @@
 
 namespace restapi\models;
 
-use Yii;
 use yii\base\Model;
 use common\models\User;
 

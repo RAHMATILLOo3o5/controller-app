@@ -2,7 +2,6 @@
 
 namespace restapi\modules\seller\controllers;
 
-use common\models\Backlog;
 use common\models\DebtAmount;
 use restapi\controllers\BaseController;
 use restapi\models\BacklogModel;
