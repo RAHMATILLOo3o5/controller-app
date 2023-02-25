@@ -4,6 +4,7 @@ namespace restapi\modules\seller\controllers;
 
 use common\models\Selling;
 use restapi\controllers\BaseController;
+use restapi\models\SellingModel;
 use restapi\modules\seller\models\SellingDebt;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -16,19 +17,31 @@ class SellingController extends BaseController
     public function actions()
     {
         $actions = parent::actions();
-
+        unset($actions['create']);
         $actions['index']['prepareDataProvider'] = [$this, 'data'];
 
         return $actions;
+    }
+
+    public function actionCreate()
+    {
+        $model = new SellingModel();
+        if (Yii::$app->request->isPost) {
+            $productList = $this->request->post('productList');
+            $type_pay = $this->request->post('type_pay');
+            return $model->saved($productList, $type_pay);
+        } else {
+            throw new MethodNotAllowedHttpException("Method Not Allowed. This URL can only handle the following request methods: POST.");
+        }
     }
 
     public function actionSellingDebt()
     {
         $model = new SellingDebt();
         if (Yii::$app->request->isPost) {
-            if($model->load($this->request->post(), '') && $model->validate()){
+            if ($model->load($this->request->post(), '') && $model->validate()) {
                 return $model->saved();
-            } else{
+            } else {
                 return $model->errors;
             }
         } else {
@@ -43,5 +56,4 @@ class SellingController extends BaseController
         ]);
         return $provider;
     }
-
 }
