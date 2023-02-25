@@ -39,11 +39,15 @@ class SellingController extends BaseController
     {
         $model = new SellingDebt();
         if (Yii::$app->request->isPost) {
-            if ($model->load($this->request->post(), '') && $model->validate()) {
-                return $model->saved();
-            } else {
-                return $model->errors;
+            $sellingList = $this->request->post('productList');
+            $debtorData = $this->request->post('debtorData');
+            $total_debt = $this->request->post('total_debt');
+            $instant_payment = $this->request->post('instant_payment');
+            $isCreate = $this->request->post('isCreate');
+            if ($isCreate) {
+                return $this->request->post();
             }
+            return $model->saveWithoutDebtor($sellingList, $debtorData, $total_debt, $instant_payment);
         } else {
             throw new MethodNotAllowedHttpException("Method Not Allowed. This URL can only handle the following request methods: POST.");
         }

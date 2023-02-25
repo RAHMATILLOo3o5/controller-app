@@ -3,11 +3,14 @@
 namespace restapi\modules\seller\models;
 
 use common\models\Backlog;
+use common\models\DebtAmount;
 use yii\base\Model;
 use common\models\Debtor;
 use common\models\ProductCategory;
 use common\models\Product;
 use common\models\Selling;
+use restapi\models\BacklogModel;
+use restapi\models\SellingModel;
 
 class SellingDebt extends Model
 {
@@ -37,7 +40,6 @@ class SellingDebt extends Model
     {
         $backlog = new Backlog();
         $selling = new Selling();
-
         $selling->category_id = $this->category_id;
         $selling->product_id = $this->product_id;
         $selling->sell_price = $this->payment_amount;
@@ -49,8 +51,46 @@ class SellingDebt extends Model
             $backlog->debtor_id = $this->debtor_id;
             $backlog->backlog_amount = $this->sell_price;
             return $backlog->save() ? $backlog->saved() : $backlog->errors;
-        } else{
+        } else {
             return $selling->errors;
         }
+    }
+
+    /**
+     * Selling saqlash uchun qarzdor oldindan yaratilgan bo'lsa
+     * @property array $sellingList
+     * @property array $debtorData
+     * @property float $total_debt
+     * @property float $instant_payment
+     * @return void
+     */
+    public function saveWithoutDebtor(array $sellingList, array $debtorData, float $total_debt, float $instant_payment)
+    {
+        $logs = null;
+        $debtAmount = new DebtAmount();
+        foreach ($sellingList as $k) {
+            $model = new SellingModel();
+            $model->category_id = $k['category_id'];
+            $model->product_id = $k['product_id'];
+            $model->type_sell = $k['type_sell'];
+            $model->sell_amount = $k['sell_amount'];
+            $model->sell_price = $k['sell_price'];
+            $model->type_pay = 5;
+            if ($model->save()) {
+                $backlog = new BacklogModel();
+                $backlog->selling_id = $model->id;
+                $backlog->debtor_id = $debtorData['id'];
+                $backlog->backlog_amount = $k['sell_price'];
+                $backlog->save();
+                $logs = true;
+            } else {
+                $logs = false;
+            }
+        }
+        $debtAmount->debtor_id = $debtorData['id'];
+        $debtAmount->all_debt_amount += $total_debt;
+        $debtAmount->pay_debt += $instant_payment;
+        $debtAmount->save();
+        return $logs;
     }
 }

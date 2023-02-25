@@ -26,11 +26,11 @@ use yii\behaviors\BlameableBehavior;
  */
 class Selling extends \yii\db\ActiveRecord
 {
-    const TYPE_RETAIL = 0;
-    const TYPE_GOOD = 10;
-    const PAY_ONLINE = 0;
-    const PAY_DEBT = 5;
-    const PAY_CASH = 10;
+    const TYPE_RETAIL = 0; # Optom
+    const TYPE_GOOD = 10; # Chakana
+    const PAY_ONLINE = 0; # Plastikka
+    const PAY_DEBT = 5; # Qarzga
+    const PAY_CASH = 10; # Naqd pulga
     /**
      * {@inheritdoc}
      */
@@ -202,5 +202,4 @@ class Selling extends \yii\db\ActiveRecord
 
         return ($r != null) ? $r : 0;
     }
-
 }
