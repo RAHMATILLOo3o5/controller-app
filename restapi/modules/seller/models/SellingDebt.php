@@ -93,4 +93,8 @@ class SellingDebt extends Model
         $debtAmount->save();
         return $logs;
     }
+
+    public function saveWithDebtor(array $sellingList, array $debtorData, float $total_debt, float $instant_payment)
+    {
+    }
 }
