@@ -45,7 +45,7 @@ class SellingController extends BaseController
             $instant_payment = $this->request->post('instant_payment');
             $isCreate = $this->request->post('isCreate');
             if ($isCreate) {
-                return $this->request->post();
+                return $model->saveWithDebtor($sellingList, $debtorData, $total_debt, $instant_payment);
             }
             return $model->saveWithoutDebtor($sellingList, $debtorData, $total_debt, $instant_payment);
         } else {

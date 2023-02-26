@@ -96,5 +96,33 @@ class SellingDebt extends Model
 
     public function saveWithDebtor(array $sellingList, array $debtorData, float $total_debt, float $instant_payment)
     {
+        $logs = null;
+        $debtAmount = new DebtAmount();
+        $debtor = new DebtorModel();
+        $id = $debtor->saved($debtorData);
+        foreach ($sellingList as $k) {
+            $model = new SellingModel();
+            $model->category_id = $k['category_id'];
+            $model->product_id = $k['product_id'];
+            $model->type_sell = $k['type_sell'];
+            $model->sell_amount = $k['sell_amount'];
+            $model->sell_price = $k['sell_price'];
+            $model->type_pay = 5;
+            if ($model->save()) {
+                $backlog = new BacklogModel();
+                $backlog->selling_id = $model->id;
+                $backlog->debtor_id = $id;
+                $backlog->backlog_amount = $k['sell_price'];
+                $backlog->save();
+                $logs = true;
+            } else {
+                $logs = false;
+            }
+        }
+        $debtAmount->debtor_id = $id;
+        $debtAmount->all_debt_amount += $total_debt;
+        $debtAmount->pay_debt += $instant_payment;
+        $debtAmount->save();
+        return $logs;
     }
 }

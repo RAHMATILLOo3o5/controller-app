@@ -17,7 +17,7 @@ class DebtorModel extends Debtor
             'status',
             'created_at',
             'updated_at',
-            'author_id' => function(){
+            'author_id' => function () {
                 return $this->worker;
             },
         ];
@@ -33,4 +33,13 @@ class DebtorModel extends Debtor
         ];
     }
 
+    public function saved(array $debtorData)
+    {
+        $this->full_name = $debtorData['full_name'];
+        $this->location = $debtorData['location'];
+        $this->phone_number = $debtorData['phone_number'];
+        $this->status = self::ACTIVE;
+
+        return $this->save() ? $this->id : $this->errors;
+    }
 }
