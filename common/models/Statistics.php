@@ -66,7 +66,6 @@ class Statistics extends \yii\db\ActiveRecord
         }
 
         return json_encode($arr);
-
     }
 
     public function getPeriodData()
@@ -120,9 +119,11 @@ class Statistics extends \yii\db\ActiveRecord
         $otherSpent = new OtherSpent();
         $profit = new Selling();
         $diff = Statistics::find()->count();
+        $debt = DebtAmount::find()->sum('all_debt_amount') ?? 0;
+        $debt_pay = DebtAmount::find()->sum('pay_debt') ?? 0;
         $data['period'] = date("Y-m-d H:i");
-        $data['total_spent'] = $otherSpent->allSumm + $productSpent->allMoney;
-        $data['total_benifit'] = $profit->allMoney;
+        $data['total_spent'] = $otherSpent->allSumm + $productSpent->allMoney + $debt;
+        $data['total_benifit'] = $profit->allMoney + $debt_pay;
         $data['benifit'] = $data['total_benifit'] - $data['total_spent'];
         $diff = Statistics::find()->orderBy('id', SORT_DESC)->one();
         if ($diff == null) {
